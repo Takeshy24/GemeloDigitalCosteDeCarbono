@@ -1,0 +1,87 @@
+{
+  "n_samples": 2500,
+  "n_features": 9,
+  "target_mean": 6299.292,
+  "target_std": 9415.0257,
+  "target_min": 38.3019,
+  "target_max": 96827.8074,
+  "target_skewness": 3.5713,
+  "correlations": {
+    "pearson_with_target": {
+      "sensor_count": 0.04627323224653133,
+      "edge_count": 0.03952434928188285,
+      "cloud_region_intensity": 0.35021294115786467,
+      "data_volume_gb_day": 0.49380332712978353,
+      "transmission_freq_hz": 0.2862065575757061,
+      "model_resolution": 0.031491590184145296,
+      "operation_days": 0.3040856540597814,
+      "solar_powered": -0.16950570341524543
+    },
+    "spearman_with_target": {
+      "sensor_count": 0.0864762207449392,
+      "edge_count": 0.08634524352373958,
+      "cloud_region_intensity": 0.47577406549985046,
+      "data_volume_gb_day": 0.5331457423695157,
+      "transmission_freq_hz": 0.35714114642258343,
+      "model_resolution": 0.04774191048670568,
+      "operation_days": 0.4280790383768343,
+      "solar_powered": -0.16030310979661203
+    }
+  },
+  "outliers": {
+    "sensor_count": {
+      "outliers_IQR": 0,
+      "outliers_Zscore_3sigma": 0,
+      "pct_IQR": 0.0,
+      "pct_Zscore": 0.0
+    },
+    "edge_count": {
+      "outliers_IQR": 0,
+      "outliers_Zscore_3sigma": 0,
+      "pct_IQR": 0.0,
+      "pct_Zscore": 0.0
+    },
+    "cloud_region_intensity": {
+      "outliers_IQR": 0,
+      "outliers_Zscore_3sigma": 0,
+      "pct_IQR": 0.0,
+      "pct_Zscore": 0.0
+    },
+    "data_volume_gb_day": {
+      "outliers_IQR": 117,
+      "outliers_Zscore_3sigma": 45,
+      "pct_IQR": 4.68,
+      "pct_Zscore": 1.8
+    },
+    "transmission_freq_hz": {
+      "outliers_IQR": 0,
+      "outliers_Zscore_3sigma": 0,
+      "pct_IQR": 0.0,
+      "pct_Zscore": 0.0
+    },
+    "model_resolution": {
+      "outliers_IQR": 0,
+      "outliers_Zscore_3sigma": 0,
+      "pct_IQR": 0.0,
+      "pct_Zscore": 0.0
+    },
+    "operation_days": {
+      "outliers_IQR": 0,
+      "outliers_Zscore_3sigma": 0,
+      "pct_IQR": 0.0,
+      "pct_Zscore": 0.0
+    },
+    "solar_powered": {
+      "outliers_IQR": 0,
+      "outliers_Zscore_3sigma": 0,
+      "pct_IQR": 0.0,
+      "pct_Zscore": 0.0
+    },
+    "total_co2e_kg": {
+      "outliers_IQR": 241,
+      "outliers_Zscore_3sigma": 64,
+      "pct_IQR": 9.64,
+      "pct_Zscore": 2.56
+    }
+  }
+}

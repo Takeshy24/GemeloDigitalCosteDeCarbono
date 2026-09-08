@@ -1,0 +1,6 @@
+{
+  "name": "AP-9: Análisis de Coste de Carbono de Gemelos Digitales",
+  "description": "Plataforma para estimar, analizar y optimizar el ciclo de vida y la huella de carbono de infraestructura IoT, Edge, Cloud y Gemelos Digitales en agricultura de precisión.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

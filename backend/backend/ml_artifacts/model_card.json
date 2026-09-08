@@ -1,0 +1,85 @@
+{
+  "model_name": "CarbonTwin_XGBoost",
+  "base_algorithm": "XGBoost",
+  "task": "regression",
+  "target": "total_co2e_kg",
+  "framework": "TensorFlow/Keras (distilled from sklearn)",
+  "exported_at": "2026-09-08T00:56:54.229893+00:00",
+  "files": {
+    "h5_model": "backend\\ml_artifacts\\best_model.h5",
+    "sklearn_backup": "backend\\ml_artifacts\\best_model_sklearn.pkl",
+    "preprocessor": "backend\\ml_artifacts\\preprocessor.pkl"
+  },
+  "performance": {
+    "RMSE": 2338.6075,
+    "MAE": 1217.2798,
+    "R2": 0.923563,
+    "MAPE": 53.0074,
+    "cv_rmse_mean": 2602.3778,
+    "cv_rmse_std": 838.1867
+  },
+  "distillation": {
+    "keras_sklearn_correlation": 0.0,
+    "distillation_rmse": 0.0
+  },
+  "best_hyperparams": {
+    "subsample": 0.8,
+    "reg_lambda": 2.0,
+    "reg_alpha": 0.5,
+    "n_estimators": 500,
+    "max_depth": 4,
+    "learning_rate": 0.1,
+    "colsample_bytree": 0.8
+  },
+  "architecture": {
+    "type": "Feedforward Neural Network",
+    "layers": [
+      {
+        "name": "dense_1",
+        "units": 256,
+        "activation": "relu"
+      },
+      {
+        "name": "bn_1",
+        "type": "BatchNormalization"
+      },
+      {
+        "name": "dropout_1",
+        "rate": 0.2
+      },
+      {
+        "name": "dense_2",
+        "units": 128,
+        "activation": "relu"
+      },
+      {
+        "name": "bn_2",
+        "type": "BatchNormalization"
+      },
+      {
+        "name": "dropout_2",
+        "rate": 0.15
+      },
+      {
+        "name": "dense_3",
+        "units": 64,
+        "activation": "relu"
+      },
+      {
+        "name": "dense_4",
+        "units": 32,
+        "activation": "relu"
+      },
+      {
+        "name": "output",
+        "units": 1,
+        "activation": "linear"
+      }
+    ]
+  },
+  "usage": {
+    "load": "keras.models.load_model('backend/ml_artifacts/best_model.h5')",
+    "preprocess": "joblib.load('backend/ml_artifacts/preprocessor.pkl').transform(X)",
+    "predict": "model.predict(X_preprocessed)"
+  }
+}

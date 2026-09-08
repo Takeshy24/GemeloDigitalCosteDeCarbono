@@ -1,0 +1,56 @@
+{
+  "sensor_count": {
+    "outliers_IQR": 0,
+    "outliers_Zscore_3sigma": 0,
+    "pct_IQR": 0.0,
+    "pct_Zscore": 0.0
+  },
+  "edge_count": {
+    "outliers_IQR": 0,
+    "outliers_Zscore_3sigma": 0,
+    "pct_IQR": 0.0,
+    "pct_Zscore": 0.0
+  },
+  "cloud_region_intensity": {
+    "outliers_IQR": 0,
+    "outliers_Zscore_3sigma": 0,
+    "pct_IQR": 0.0,
+    "pct_Zscore": 0.0
+  },
+  "data_volume_gb_day": {
+    "outliers_IQR": 117,
+    "outliers_Zscore_3sigma": 45,
+    "pct_IQR": 4.68,
+    "pct_Zscore": 1.8
+  },
+  "transmission_freq_hz": {
+    "outliers_IQR": 0,
+    "outliers_Zscore_3sigma": 0,
+    "pct_IQR": 0.0,
+    "pct_Zscore": 0.0
+  },
+  "model_resolution": {
+    "outliers_IQR": 0,
+    "outliers_Zscore_3sigma": 0,
+    "pct_IQR": 0.0,
+    "pct_Zscore": 0.0
+  },
+  "operation_days": {
+    "outliers_IQR": 0,
+    "outliers_Zscore_3sigma": 0,
+    "pct_IQR": 0.0,
+    "pct_Zscore": 0.0
+  },
+  "solar_powered": {
+    "outliers_IQR": 0,
+    "outliers_Zscore_3sigma": 0,
+    "pct_IQR": 0.0,
+    "pct_Zscore": 0.0
+  },
+  "total_co2e_kg": {
+    "outliers_IQR": 241,
+    "outliers_Zscore_3sigma": 64,
+    "pct_IQR": 9.64,
+    "pct_Zscore": 2.56
+  }
+}

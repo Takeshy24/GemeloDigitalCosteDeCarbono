@@ -1,0 +1,93 @@
+{
+  "friedman": {
+    "test": "Friedman",
+    "statistic": 35.92,
+    "p_value": 0.0,
+    "significant": true,
+    "significance": "***",
+    "interpretation": "p=0.0000 (***). \u2713 Hay diferencias significativas entre los modelos.",
+    "models": [
+      "RandomForest",
+      "XGBoost",
+      "SVR",
+      "Stacking",
+      "Blending"
+    ]
+  },
+  "wilcoxon": [
+    {
+      "test": "Wilcoxon signed-rank",
+      "comparison": "XGBoost vs RandomForest",
+      "statistic": 55.0,
+      "p_value": 0.000977,
+      "significant": true,
+      "significance": "***",
+      "interpretation": "XGBoost es significativamente mejor que RandomForest."
+    },
+    {
+      "test": "Wilcoxon signed-rank",
+      "comparison": "XGBoost vs SVR",
+      "statistic": 55.0,
+      "p_value": 0.000977,
+      "significant": true,
+      "significance": "***",
+      "interpretation": "XGBoost es significativamente mejor que SVR."
+    },
+    {
+      "test": "Wilcoxon signed-rank",
+      "comparison": "XGBoost vs Stacking",
+      "statistic": 34.0,
+      "p_value": 0.27832,
+      "significant": false,
+      "significance": "ns",
+      "interpretation": "Sin diferencia significativa con Stacking."
+    },
+    {
+      "test": "Wilcoxon signed-rank",
+      "comparison": "XGBoost vs Blending",
+      "statistic": 54.0,
+      "p_value": 0.001953,
+      "significant": true,
+      "significance": "**",
+      "interpretation": "XGBoost es significativamente mejor que Blending."
+    }
+  ],
+  "nadeau_bengio": {
+    "test": "Corrected paired t-test (Nadeau-Bengio)",
+    "t_statistic": 0.29025,
+    "p_value": 0.778202,
+    "significant": false,
+    "significance": "ns",
+    "n_folds": 10,
+    "rho_correction": 0.1,
+    "interpretation": "p=0.7782 (ns). Sin diferencia significativa tras correcci\u00f3n.",
+    "comparison": "XGBoost vs Stacking"
+  },
+  "bootstrap_ci": {
+    "test": "Bootstrap CI",
+    "n_bootstrap": 2000,
+    "point_rmse": 2338.607508,
+    "ci_lower": 1837.138797,
+    "ci_upper": 2924.836492,
+    "confidence_level": "95%",
+    "interpretation": "RMSE del mejor modelo: 2338.6075 (IC 95%: [1837.1388, 2924.8365])"
+  },
+  "shapiro_wilk": {
+    "test": "Shapiro-Wilk (normalidad de residuales)",
+    "statistic": 0.709604,
+    "p_value": 0.0,
+    "significant": true,
+    "significance": "***",
+    "interpretation": "p=0.0000 (***). Los residuales NO siguen una distribuci\u00f3n normal."
+  },
+  "breusch_pagan": {
+    "test": "Breusch-Pagan (homocedasticidad)",
+    "lm_statistic": 33.67054,
+    "p_value": 0.0,
+    "f_statistic": 35.957258,
+    "f_p_value": 0.0,
+    "significant": true,
+    "significance": "***",
+    "interpretation": "p=0.0000 (***). Heterocedasticidad detectada (varianza no constante)."
+  }
+}

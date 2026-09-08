@@ -1,0 +1,454 @@
+{
+  "pipeline_version": "1.0.0",
+  "generated_at": "2026-09-02T20:30:58.494304+00:00",
+  "elapsed_seconds": 615.7,
+  "dataset": {
+    "n_samples": 2500,
+    "n_features": 9,
+    "source": "synthetic"
+  },
+  "eda_summary": {
+    "n_samples": 2500,
+    "n_features": 9,
+    "target_mean": 6299.292,
+    "target_std": 9415.0257,
+    "target_min": 38.3019,
+    "target_max": 96827.8074,
+    "target_skewness": 3.5713,
+    "correlations": {
+      "pearson_with_target": {
+        "sensor_count": 0.04627323224653133,
+        "edge_count": 0.03952434928188285,
+        "cloud_region_intensity": 0.35021294115786467,
+        "data_volume_gb_day": 0.49380332712978353,
+        "transmission_freq_hz": 0.2862065575757061,
+        "model_resolution": 0.031491590184145296,
+        "operation_days": 0.3040856540597814,
+        "solar_powered": -0.16950570341524543
+      },
+      "spearman_with_target": {
+        "sensor_count": 0.0864762207449392,
+        "edge_count": 0.08634524352373958,
+        "cloud_region_intensity": 0.47577406549985046,
+        "data_volume_gb_day": 0.5331457423695157,
+        "transmission_freq_hz": 0.35714114642258343,
+        "model_resolution": 0.04774191048670568,
+        "operation_days": 0.4280790383768343,
+        "solar_powered": -0.16030310979661203
+      }
+    },
+    "outliers": {
+      "sensor_count": {
+        "outliers_IQR": 0,
+        "outliers_Zscore_3sigma": 0,
+        "pct_IQR": 0.0,
+        "pct_Zscore": 0.0
+      },
+      "edge_count": {
+        "outliers_IQR": 0,
+        "outliers_Zscore_3sigma": 0,
+        "pct_IQR": 0.0,
+        "pct_Zscore": 0.0
+      },
+      "cloud_region_intensity": {
+        "outliers_IQR": 0,
+        "outliers_Zscore_3sigma": 0,
+        "pct_IQR": 0.0,
+        "pct_Zscore": 0.0
+      },
+      "data_volume_gb_day": {
+        "outliers_IQR": 117,
+        "outliers_Zscore_3sigma": 45,
+        "pct_IQR": 4.68,
+        "pct_Zscore": 1.8
+      },
+      "transmission_freq_hz": {
+        "outliers_IQR": 0,
+        "outliers_Zscore_3sigma": 0,
+        "pct_IQR": 0.0,
+        "pct_Zscore": 0.0
+      },
+      "model_resolution": {
+        "outliers_IQR": 0,
+        "outliers_Zscore_3sigma": 0,
+        "pct_IQR": 0.0,
+        "pct_Zscore": 0.0
+      },
+      "operation_days": {
+        "outliers_IQR": 0,
+        "outliers_Zscore_3sigma": 0,
+        "pct_IQR": 0.0,
+        "pct_Zscore": 0.0
+      },
+      "solar_powered": {
+        "outliers_IQR": 0,
+        "outliers_Zscore_3sigma": 0,
+        "pct_IQR": 0.0,
+        "pct_Zscore": 0.0
+      },
+      "total_co2e_kg": {
+        "outliers_IQR": 241,
+        "outliers_Zscore_3sigma": 64,
+        "pct_IQR": 9.64,
+        "pct_Zscore": 2.56
+      }
+    }
+  },
+  "models": {
+    "RandomForest": {
+      "best_params": {
+        "n_estimators": 200,
+        "min_samples_split": 2,
+        "min_samples_leaf": 1,
+        "max_features": "log2",
+        "max_depth": 30
+      },
+      "cv_rmse_scores": [
+        6635.4498,
+        2560.7504,
+        3016.1531,
+        3093.1105,
+        4625.9716,
+        4928.7414,
+        3743.1107,
+        3636.5137,
+        6626.9372,
+        3457.3984
+      ],
+      "cv_rmse_mean": 4232.4137,
+      "cv_rmse_std": 1375.3184,
+      "test_metrics": {
+        "RMSE": 3749.6664,
+        "MAE": 2002.3672,
+        "R2": 0.803494,
+        "MAPE": 103.1333
+      }
+    },
+    "XGBoost": {
+      "best_params": {
+        "subsample": 0.8,
+        "reg_lambda": 2.0,
+        "reg_alpha": 0.5,
+        "n_estimators": 500,
+        "max_depth": 4,
+        "learning_rate": 0.1,
+        "colsample_bytree": 0.8
+      },
+      "cv_rmse_scores": [
+        3948.7206,
+        2112.6345,
+        1748.1753,
+        1885.7666,
+        3037.7725,
+        2939.7996,
+        2234.2007,
+        2314.6822,
+        4131.8211,
+        1670.2053
+      ],
+      "cv_rmse_mean": 2602.3778,
+      "cv_rmse_std": 838.1867,
+      "test_metrics": {
+        "RMSE": 2338.6075,
+        "MAE": 1217.2798,
+        "R2": 0.923563,
+        "MAPE": 53.0074
+      }
+    },
+    "SVR": {
+      "best_params": {
+        "kernel": "rbf",
+        "gamma": "auto",
+        "epsilon": 0.01,
+        "C": 500
+      },
+      "cv_rmse_scores": [
+        8284.5045,
+        4127.3187,
+        4576.9131,
+        4110.0034,
+        6075.6049,
+        7382.4647,
+        5266.1725,
+        4663.3708,
+        9408.2831,
+        5126.1335
+      ],
+      "cv_rmse_mean": 5902.0769,
+      "cv_rmse_std": 1756.3972,
+      "test_metrics": {
+        "RMSE": 4908.5281,
+        "MAE": 1808.0625,
+        "R2": 0.663262,
+        "MAPE": 40.7558
+      }
+    },
+    "Stacking": {
+      "best_params": {
+        "final_estimator__alpha": 100.0
+      },
+      "cv_rmse_scores": [
+        3629.1959,
+        2551.0582,
+        1837.472,
+        1897.7583,
+        3119.8504,
+        3031.5158,
+        2219.1759,
+        2261.1052,
+        3437.5655,
+        2610.9582
+      ],
+      "cv_rmse_mean": 2659.5655,
+      "cv_rmse_std": 593.1875,
+      "test_metrics": {
+        "RMSE": 2212.8853,
+        "MAE": 1183.1971,
+        "R2": 0.93156,
+        "MAPE": 42.4162
+      }
+    },
+    "Blending": {
+      "best_params": {
+        "weights": [
+          0.4,
+          0.5,
+          0.1
+        ]
+      },
+      "cv_rmse_scores": [
+        5964.7088,
+        2092.0974,
+        2511.0623,
+        2614.5289,
+        4041.6099,
+        4419.0289,
+        2974.045,
+        3329.3923,
+        6222.6836,
+        2917.1057
+      ],
+      "cv_rmse_mean": 3708.6263,
+      "cv_rmse_std": 1363.0939,
+      "test_metrics": {
+        "RMSE": 2921.9377,
+        "MAE": 1349.7331,
+        "R2": 0.880675,
+        "MAPE": 46.7076
+      }
+    }
+  },
+  "best_model": {
+    "name": "XGBoost",
+    "metrics": {
+      "RMSE": 2338.6075,
+      "MAE": 1217.2798,
+      "R2": 0.923563,
+      "MAPE": 53.0074
+    },
+    "cv_rmse_mean": 2602.3778,
+    "cv_rmse_std": 838.1867,
+    "hyperparams": {
+      "subsample": 0.8,
+      "reg_lambda": 2.0,
+      "reg_alpha": 0.5,
+      "n_estimators": 500,
+      "max_depth": 4,
+      "learning_rate": 0.1,
+      "colsample_bytree": 0.8
+    }
+  },
+  "statistical_tests": {
+    "friedman": {
+      "test": "Friedman",
+      "statistic": 35.92,
+      "p_value": 0.0,
+      "significant": true,
+      "significance": "***",
+      "interpretation": "p=0.0000 (***). \u2713 Hay diferencias significativas entre los modelos.",
+      "models": [
+        "RandomForest",
+        "XGBoost",
+        "SVR",
+        "Stacking",
+        "Blending"
+      ]
+    },
+    "wilcoxon": [
+      {
+        "test": "Wilcoxon signed-rank",
+        "comparison": "XGBoost vs RandomForest",
+        "statistic": 55.0,
+        "p_value": 0.000977,
+        "significant": true,
+        "significance": "***",
+        "interpretation": "XGBoost es significativamente mejor que RandomForest."
+      },
+      {
+        "test": "Wilcoxon signed-rank",
+        "comparison": "XGBoost vs SVR",
+        "statistic": 55.0,
+        "p_value": 0.000977,
+        "significant": true,
+        "significance": "***",
+        "interpretation": "XGBoost es significativamente mejor que SVR."
+      },
+      {
+        "test": "Wilcoxon signed-rank",
+        "comparison": "XGBoost vs Stacking",
+        "statistic": 34.0,
+        "p_value": 0.27832,
+        "significant": false,
+        "significance": "ns",
+        "interpretation": "Sin diferencia significativa con Stacking."
+      },
+      {
+        "test": "Wilcoxon signed-rank",
+        "comparison": "XGBoost vs Blending",
+        "statistic": 54.0,
+        "p_value": 0.001953,
+        "significant": true,
+        "significance": "**",
+        "interpretation": "XGBoost es significativamente mejor que Blending."
+      }
+    ],
+    "nadeau_bengio": {
+      "test": "Corrected paired t-test (Nadeau-Bengio)",
+      "t_statistic": 0.29025,
+      "p_value": 0.778202,
+      "significant": false,
+      "significance": "ns",
+      "n_folds": 10,
+      "rho_correction": 0.1,
+      "interpretation": "p=0.7782 (ns). Sin diferencia significativa tras correcci\u00f3n.",
+      "comparison": "XGBoost vs Stacking"
+    },
+    "bootstrap_ci": {
+      "test": "Bootstrap CI",
+      "n_bootstrap": 2000,
+      "point_rmse": 2338.607508,
+      "ci_lower": 1837.138797,
+      "ci_upper": 2924.836492,
+      "confidence_level": "95%",
+      "interpretation": "RMSE del mejor modelo: 2338.6075 (IC 95%: [1837.1388, 2924.8365])"
+    },
+    "shapiro_wilk": {
+      "test": "Shapiro-Wilk (normalidad de residuales)",
+      "statistic": 0.709604,
+      "p_value": 0.0,
+      "significant": true,
+      "significance": "***",
+      "interpretation": "p=0.0000 (***). Los residuales NO siguen una distribuci\u00f3n normal."
+    },
+    "breusch_pagan": {
+      "test": "Breusch-Pagan (homocedasticidad)",
+      "lm_statistic": 33.67054,
+      "p_value": 0.0,
+      "f_statistic": 35.957258,
+      "f_p_value": 0.0,
+      "significant": true,
+      "significance": "***",
+      "interpretation": "p=0.0000 (***). Heterocedasticidad detectada (varianza no constante)."
+    }
+  },
+  "export": {
+    "h5_path": "backend\\ml_artifacts\\best_model.h5",
+    "sklearn_path": "backend\\ml_artifacts\\best_model_sklearn.pkl",
+    "preprocessor_path": "backend\\ml_artifacts\\preprocessor.pkl",
+    "model_card_path": "backend\\ml_artifacts\\model_card.json",
+    "model_card": {
+      "model_name": "CarbonTwin_XGBoost",
+      "base_algorithm": "XGBoost",
+      "task": "regression",
+      "target": "total_co2e_kg",
+      "framework": "TensorFlow/Keras (distilled from sklearn)",
+      "exported_at": "2026-09-02T20:30:58.492289+00:00",
+      "files": {
+        "h5_model": "backend\\ml_artifacts\\best_model.h5",
+        "sklearn_backup": "backend\\ml_artifacts\\best_model_sklearn.pkl",
+        "preprocessor": "backend\\ml_artifacts\\preprocessor.pkl"
+      },
+      "performance": {
+        "RMSE": 2338.6075,
+        "MAE": 1217.2798,
+        "R2": 0.923563,
+        "MAPE": 53.0074,
+        "cv_rmse_mean": 2602.3778,
+        "cv_rmse_std": 838.1867
+      },
+      "distillation": {
+        "keras_sklearn_correlation": 0.0,
+        "distillation_rmse": 0.0
+      },
+      "best_hyperparams": {
+        "subsample": 0.8,
+        "reg_lambda": 2.0,
+        "reg_alpha": 0.5,
+        "n_estimators": 500,
+        "max_depth": 4,
+        "learning_rate": 0.1,
+        "colsample_bytree": 0.8
+      },
+      "architecture": {
+        "type": "Feedforward Neural Network",
+        "layers": [
+          {
+            "name": "dense_1",
+            "units": 256,
+            "activation": "relu"
+          },
+          {
+            "name": "bn_1",
+            "type": "BatchNormalization"
+          },
+          {
+            "name": "dropout_1",
+            "rate": 0.2
+          },
+          {
+            "name": "dense_2",
+            "units": 128,
+            "activation": "relu"
+          },
+          {
+            "name": "bn_2",
+            "type": "BatchNormalization"
+          },
+          {
+            "name": "dropout_2",
+            "rate": 0.15
+          },
+          {
+            "name": "dense_3",
+            "units": 64,
+            "activation": "relu"
+          },
+          {
+            "name": "dense_4",
+            "units": 32,
+            "activation": "relu"
+          },
+          {
+            "name": "output",
+            "units": 1,
+            "activation": "linear"
+          }
+        ]
+      },
+      "usage": {
+        "load": "keras.models.load_model('backend/ml_artifacts/best_model.h5')",
+        "preprocess": "joblib.load('backend/ml_artifacts/preprocessor.pkl').transform(X)",
+        "predict": "model.predict(X_preprocessed)"
+      }
+    }
+  },
+  "artifacts": {
+    "eda_dir": "backend/ml_artifacts/eda/",
+    "plots_dir": "backend/ml_artifacts/plots/",
+    "h5_model": "backend/ml_artifacts/best_model.h5",
+    "sklearn_backup": "backend/ml_artifacts/best_model_sklearn.pkl",
+    "preprocessor": "backend/ml_artifacts/preprocessor.pkl",
+    "model_card": "backend/ml_artifacts/model_card.json",
+    "statistical_report": "backend/ml_artifacts/statistical_report.md"
+  }
+}
