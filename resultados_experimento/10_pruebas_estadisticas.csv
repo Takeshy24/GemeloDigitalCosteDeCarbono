@@ -1,0 +1,10 @@
+test,comparison,statistic,p_value,alpha,significant,interpretation,ci_lower,ci_upper,n_bootstrap
+Friedman,,35.92,0.0,0.05,True,p=0.0000 (***). ✓ Hay diferencias significativas entre los modelos.,,,
+Wilcoxon signed-rank,XGBoost vs RandomForest,55.0,0.000977,0.05,True,XGBoost es significativamente mejor que RandomForest.,,,
+Wilcoxon signed-rank,XGBoost vs SVR,55.0,0.000977,0.05,True,XGBoost es significativamente mejor que SVR.,,,
+Wilcoxon signed-rank,XGBoost vs Stacking,34.0,0.27832,0.05,False,Sin diferencia significativa con Stacking.,,,
+Wilcoxon signed-rank,XGBoost vs Blending,54.0,0.001953,0.05,True,XGBoost es significativamente mejor que Blending.,,,
+Corrected paired t-test (Nadeau-Bengio),XGBoost vs Stacking,0.29025,0.778202,0.05,False,p=0.7782 (ns). Sin diferencia significativa tras corrección.,,,
+Bootstrap CI,,,,0.05,,"RMSE del mejor modelo: 2338.6075 (IC 95%: [1837.1388, 2924.8365])",1837.138797,2924.836492,2000
+Shapiro-Wilk (normalidad de residuales),,0.709604,0.0,0.05,True,p=0.0000 (***). Los residuales NO siguen una distribución normal.,,,
+Breusch-Pagan (homocedasticidad),,33.67054,0.0,0.05,True,p=0.0000 (***). Heterocedasticidad detectada (varianza no constante).,,,

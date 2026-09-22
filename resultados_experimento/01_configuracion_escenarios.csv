@@ -1,0 +1,5 @@
+scenario,crop,area_ha,horizon_years,sensor_count,sensor_interval_min,edge_count,edge_solar,cloud_vcpu,cloud_daily_usage_h,cloud_storage_gb,cloud_transfer_gb_month,twin_resolution_documented,twin_daily_processed_data_mb,functional_load_statement
+Cloud-heavy,Maíz,10,3,30,15,1,False,8,24,500,900,0.7,500,"Mismo cultivo, superficie, horizonte, 30 sensores, gemelo y datos originalmente capturados; cambia solamente el reparto Edge/Cloud y energía Edge."
+Híbrida,Maíz,10,3,30,15,1,False,4,12,250,450,0.7,500,"Mismo cultivo, superficie, horizonte, 30 sensores, gemelo y datos originalmente capturados; cambia solamente el reparto Edge/Cloud y energía Edge."
+Edge-heavy sin solar,Maíz,10,3,30,15,2,False,2,6,100,180,0.7,500,"Mismo cultivo, superficie, horizonte, 30 sensores, gemelo y datos originalmente capturados; cambia solamente el reparto Edge/Cloud y energía Edge."
+Edge-heavy con solar,Maíz,10,3,30,15,2,True,2,6,100,180,0.7,500,"Mismo cultivo, superficie, horizonte, 30 sensores, gemelo y datos originalmente capturados; cambia solamente el reparto Edge/Cloud y energía Edge."

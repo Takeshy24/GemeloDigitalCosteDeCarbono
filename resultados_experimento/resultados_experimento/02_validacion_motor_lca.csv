@@ -1,0 +1,4 @@
+name,manualKgCO2e,systemKgCO2e,absoluteErrorKgCO2e,relativeErrorPct,note
+V1_sensores,213.93306005859378,239.43,25.496939941406225,11.918185966405993,El motor siempre añade la red dedicada fija (6.7 + 8.5×años kg CO2e); la diferencia procede de ese componente no incluido en los tres cálculos manuales de componentes.
+V2_sensores_edge,298.7370600585938,324.24,25.502939941406225,8.536918699141017,El motor siempre añade la red dedicada fija (6.7 + 8.5×años kg CO2e); la diferencia procede de ese componente no incluido en los tres cálculos manuales de componentes.
+V3_sensores_edge_cloud,845.4976225585938,871.0,25.502377441406225,3.0162565524705407,El motor siempre añade la red dedicada fija (6.7 + 8.5×años kg CO2e); la diferencia procede de ese componente no incluido en los tres cálculos manuales de componentes.

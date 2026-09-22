@@ -1,0 +1,5 @@
+scenario,total_kgCO2e,annual_kgCO2e,kgCO2e_per_ha,kgCO2e_per_day,total_energy_kwh,reduction_vs_cloud_heavy_pct,cost_usd,latency_ms
+Cloud-heavy,1665.68,555.2266666666667,166.57,1.52,1796.52,0.0,not_available_from_lca_engine,not_available_from_lca_engine
+Híbrida,852.03,284.01,85.2,0.78,1796.52,48.84791796743673,not_available_from_lca_engine,not_available_from_lca_engine
+Edge-heavy sin solar,626.25,208.75,62.63,0.57,2111.88,62.402742423514724,not_available_from_lca_engine,not_available_from_lca_engine
+Edge-heavy con solar,547.41,182.47,54.74,0.5,2111.88,67.13594447913164,not_available_from_lca_engine,not_available_from_lca_engine

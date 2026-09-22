@@ -25,6 +25,7 @@ PREPROCESSOR_PATH = ARTIFACTS_DIR / "preprocessor.pkl"
 SKLEARN_MODEL_PATH = ARTIFACTS_DIR / "best_model_sklearn.pkl"
 H5_MODEL_PATH = ARTIFACTS_DIR / "best_model.h5"
 STAT_REPORT_PATH = ARTIFACTS_DIR / "statistical_report.md"
+STAT_JSON_PATH = ARTIFACTS_DIR / "statistical_tests.json"
 MODEL_CARD_PATH = ARTIFACTS_DIR / "model_card.json"
 PLOTS_DIR = ARTIFACTS_DIR / "plots"
 EDA_DIR = ARTIFACTS_DIR / "eda"
@@ -39,6 +40,23 @@ def load_existing_report() -> dict[str, Any] | None:
         except Exception:
             return None
     return None
+
+
+def load_statistical_tests() -> dict[str, Any]:
+    """Carga los resultados de las pruebas estadísticas con fallback automático."""
+    if STAT_JSON_PATH.exists():
+        try:
+            with open(STAT_JSON_PATH, "r", encoding="utf-8") as f:
+                data = json.load(f)
+                if data:
+                    return data
+        except Exception:
+            pass
+
+    rep = load_existing_report()
+    if rep and "statistical_tests" in rep and rep["statistical_tests"]:
+        return rep["statistical_tests"]
+    return {}
 
 
 def load_dataset_for_eda(n_samples: int = 2500, seed: int = 42) -> pd.DataFrame:

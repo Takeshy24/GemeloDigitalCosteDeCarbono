@@ -1,0 +1,25 @@
+scenario,dimension,name,manufacturing_kgCO2e,transport_kgCO2e,installation_kgCO2e,operation_kgCO2e,maintenance_kgCO2e,end_of_life_kgCO2e,total_kgCO2e
+Cloud-heavy,category,sensors,145.5,0.27,4.5,17.76,52.38,-6.48,213.93
+Cloud-heavy,category,edge,29.8,0.12,0.8,47.3,8.94,-2.16,84.8
+Cloud-heavy,category,cloud,20.0,0.0,0.0,1270.91,0.0,0.0,1290.91
+Cloud-heavy,category,digitalTwins,0.0,0.0,15.0,23.53,12.0,0.0,50.54
+Cloud-heavy,category,network,4.5,0.5,1.0,25.5,1.5,-0.8,32.2
+Cloud-heavy,life_cycle_total,all_layers,195.3,0.39,20.3,1385.01,73.32,-8.64,1665.68
+Híbrida,category,sensors,145.5,0.27,4.5,17.76,52.38,-6.48,213.93
+Híbrida,category,edge,29.8,0.12,0.8,47.3,8.94,-2.16,84.8
+Híbrida,category,cloud,10.0,0.0,0.0,467.26,0.0,0.0,477.26
+Híbrida,category,digitalTwins,0.0,0.0,15.0,23.53,12.0,0.0,50.54
+Híbrida,category,network,4.5,0.5,1.0,25.5,1.5,-0.8,32.2
+Híbrida,life_cycle_total,all_layers,185.3,0.39,20.3,581.36,73.32,-8.64,852.03
+Edge-heavy sin solar,category,sensors,145.5,0.27,4.5,17.76,52.38,-6.48,213.93
+Edge-heavy sin solar,category,edge,59.6,0.24,1.6,94.61,17.88,-4.32,169.61
+Edge-heavy sin solar,category,cloud,5.0,0.0,0.0,161.68,0.0,0.0,166.68
+Edge-heavy sin solar,category,digitalTwins,0.0,0.0,15.0,23.53,12.0,0.0,50.54
+Edge-heavy sin solar,category,network,4.5,0.5,1.0,25.5,1.5,-0.8,32.2
+Edge-heavy sin solar,life_cycle_total,all_layers,210.1,0.51,21.1,323.08,82.26,-10.8,626.25
+Edge-heavy con solar,category,sensors,145.5,0.27,4.5,17.76,52.38,-6.48,213.93
+Edge-heavy con solar,category,edge,59.6,0.24,1.6,15.77,17.88,-4.32,90.77
+Edge-heavy con solar,category,cloud,5.0,0.0,0.0,161.68,0.0,0.0,166.68
+Edge-heavy con solar,category,digitalTwins,0.0,0.0,15.0,23.53,12.0,0.0,50.54
+Edge-heavy con solar,category,network,4.5,0.5,1.0,25.5,1.5,-0.8,32.2
+Edge-heavy con solar,life_cycle_total,all_layers,210.1,0.51,21.1,244.24,82.26,-10.8,547.41

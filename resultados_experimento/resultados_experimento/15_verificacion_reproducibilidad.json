@@ -1,0 +1,18 @@
+{
+  "seed": 42,
+  "lca_totals_run1": [
+    1665.68,
+    852.03,
+    626.25,
+    547.41
+  ],
+  "lca_totals_run2": [
+    1665.68,
+    852.03,
+    626.25,
+    547.41
+  ],
+  "lca_identical": true,
+  "ml_metrics_identical": true,
+  "note": "La segunda ejecución del ML reproduce exactamente métricas y mejor modelo; solo el tiempo de reloj difiere."
+}

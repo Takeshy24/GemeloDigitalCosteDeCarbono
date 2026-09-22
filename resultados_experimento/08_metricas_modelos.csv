@@ -1,0 +1,6 @@
+model,test_RMSE,test_MAE,test_R2,test_MAPE,cv_rmse_mean_kgCO2e,cv_rmse_std_kgCO2e,training_time_seconds_not_exposed_by_pipeline
+RandomForest,3749.6664,2002.3672,0.803494,103.1333,4232.4137,1375.3184,not_available
+XGBoost,2338.6075,1217.2798,0.923563,53.0074,2602.3778,838.1867,not_available
+SVR,4908.5281,1808.0625,0.663262,40.7558,5902.0769,1756.3972,not_available
+Stacking,2212.8853,1183.1971,0.93156,42.4162,2659.5655,593.1875,not_available
+Blending,2921.9377,1349.7331,0.880675,46.7076,3708.6263,1363.0939,not_available

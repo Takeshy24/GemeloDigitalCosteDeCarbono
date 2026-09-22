@@ -1,0 +1,2 @@
+scenario,status,reason
+all,not_executed,El sistema no ofrece Monte Carlo y los factores demostrativos no contienen distribuciones/rangos de incertidumbre validados; no se inventaron distribuciones.

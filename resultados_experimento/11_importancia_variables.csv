@@ -1,0 +1,14 @@
+variable,internal_importance,permutation_importance_mean,permutation_importance_std,method,rank,direction_approx
+data_volume_gb_day,0.19982260465621948,6502.080353132976,471.41158006292454,internal + permutation,1,higher value increases/decreases depends on model; not inferred from importance
+cloud_region_intensity,0.14856813848018646,4613.153361001987,499.89393207074323,internal + permutation,2,higher value increases/decreases depends on model; not inferred from importance
+operation_days,0.1431073248386383,3823.3265129801694,317.971321668713,internal + permutation,3,higher value increases/decreases depends on model; not inferred from importance
+transmission_freq_hz,0.14182361960411072,3783.951748719137,392.5433223648986,internal + permutation,4,higher value increases/decreases depends on model; not inferred from importance
+solar_powered,0.1963726282119751,1035.35623489399,148.8393339714816,internal + permutation,5,higher value increases/decreases depends on model; not inferred from importance
+crop_type_soy,0.06333764642477036,286.16900876302344,72.09196521913968,internal + permutation,6,higher value increases/decreases depends on model; not inferred from importance
+crop_type_rice,0.025615118443965912,138.84399981850555,31.122920562944017,internal + permutation,7,higher value increases/decreases depends on model; not inferred from importance
+crop_type_wheat,0.014615084044635296,22.528146065602233,24.743437286902367,internal + permutation,8,higher value increases/decreases depends on model; not inferred from importance
+sensor_count,0.012353923171758652,21.651175320152312,39.430328683068005,internal + permutation,9,higher value increases/decreases depends on model; not inferred from importance
+edge_count,0.009495425038039684,9.090898106156033,23.340572326165915,internal + permutation,10,higher value increases/decreases depends on model; not inferred from importance
+model_resolution,0.006021800916641951,1.4302292900943256,17.313853449736207,internal + permutation,11,higher value increases/decreases depends on model; not inferred from importance
+crop_type_tomato,0.011986516416072845,-6.150571026655006,25.28190892671681,internal + permutation,12,higher value increases/decreases depends on model; not inferred from importance
+crop_type_corn,0.026880202814936638,-7.93163406956503,19.694220423882708,internal + permutation,13,higher value increases/decreases depends on model; not inferred from importance
