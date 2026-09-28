@@ -1,0 +1,106 @@
+{
+  "n_samples": 2500,
+  "columns": [
+    "sensor_count",
+    "edge_count",
+    "cloud_region_intensity",
+    "data_volume_gb_day",
+    "transmission_freq_hz",
+    "model_resolution",
+    "crop_type",
+    "operation_days",
+    "solar_powered",
+    "total_co2e_kg"
+  ],
+  "target": "total_co2e_kg",
+  "data_sources": {
+    "electricity_carbon_intensity": {
+      "source": "Our World in Data / Ember Climate",
+      "metric": "Real historical electricity grid carbon intensity (kgCO2e/kWh)",
+      "countries_included": [
+        "Australia",
+        "Brazil",
+        "Canada",
+        "France",
+        "Germany",
+        "India",
+        "Ireland",
+        "Japan",
+        "Netherlands",
+        "Spain",
+        "Sweden",
+        "United Kingdom",
+        "United States"
+      ],
+      "years_range": "2018 - 2025"
+    },
+    "crop_and_soil_telemetry": {
+      "source": "Precision Agriculture Field Crop Dataset",
+      "crops_mapped": [
+        "corn",
+        "rice",
+        "soy",
+        "tomato",
+        "wheat"
+      ],
+      "features_used": [
+        "temperature",
+        "humidity",
+        "rainfall",
+        "soil_npk"
+      ]
+    },
+    "carbon_accounting_standard": {
+      "methodology": "Green Software Foundation (GSF - SCI) & Cloud Carbon Footprint (CCF)",
+      "edge_power_model": "ESP32 sensor nodes (0.15W) + Raspberry Pi gateways (4W)",
+      "cloud_compute_model": "Digital Twin physics simulation scaled by model_resolution"
+    }
+  },
+  "summary_statistics": {
+    "sensor_count": {
+      "min": 12.0,
+      "max": 50.0,
+      "mean": 32.2048
+    },
+    "edge_count": {
+      "min": 2.0,
+      "max": 10.0,
+      "mean": 6.4676
+    },
+    "cloud_region_intensity": {
+      "min": 0.0349,
+      "max": 0.7377,
+      "mean": 0.32054864
+    },
+    "data_volume_gb_day": {
+      "min": 0.1,
+      "max": 24.43,
+      "mean": 5.733932
+    },
+    "transmission_freq_hz": {
+      "min": 0.0132,
+      "max": 4.9986,
+      "mean": 2.46446364
+    },
+    "model_resolution": {
+      "min": 0.15,
+      "max": 1.0,
+      "mean": 0.5789112
+    },
+    "operation_days": {
+      "min": 75.0,
+      "max": 165.0,
+      "mean": 116.1912
+    },
+    "solar_powered": {
+      "min": 0.0,
+      "max": 1.0,
+      "mean": 0.3924
+    },
+    "total_co2e_kg": {
+      "min": 5.3812,
+      "max": 1674.0336,
+      "mean": 247.41719824
+    }
+  }
+}

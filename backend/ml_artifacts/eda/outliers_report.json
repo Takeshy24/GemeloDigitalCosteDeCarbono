@@ -18,10 +18,10 @@
     "pct_Zscore": 0.0
   },
   "data_volume_gb_day": {
-    "outliers_IQR": 117,
-    "outliers_Zscore_3sigma": 45,
-    "pct_IQR": 4.68,
-    "pct_Zscore": 1.8
+    "outliers_IQR": 46,
+    "outliers_Zscore_3sigma": 27,
+    "pct_IQR": 1.84,
+    "pct_Zscore": 1.08
   },
   "transmission_freq_hz": {
     "outliers_IQR": 0,
@@ -48,9 +48,9 @@
     "pct_Zscore": 0.0
   },
   "total_co2e_kg": {
-    "outliers_IQR": 241,
-    "outliers_Zscore_3sigma": 64,
-    "pct_IQR": 9.64,
-    "pct_Zscore": 2.56
+    "outliers_IQR": 96,
+    "outliers_Zscore_3sigma": 41,
+    "pct_IQR": 3.84,
+    "pct_Zscore": 1.64
   }
 }

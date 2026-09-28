@@ -98,12 +98,17 @@ def load_or_generate(
 ) -> pd.DataFrame:
     """
     Si se proporciona `csv_path` y el archivo existe, lo carga.
+    Si no se proporciona pero existe backend/ml_artifacts/dataset.csv, lo carga por defecto.
     En caso contrario, genera el dataset sintético con los parámetros indicados.
     """
     if csv_path is not None:
         p = Path(csv_path)
         if p.exists():
             return pd.read_csv(p)
+
+    default_path = Path("backend/ml_artifacts/dataset.csv")
+    if default_path.exists():
+        return pd.read_csv(default_path)
 
     return generate_dataset(n_samples=n_samples, seed=seed)
 

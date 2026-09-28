@@ -4,17 +4,17 @@
 
 | Modelo | CV-RMSE (μ) | CV-RMSE (σ) | RMSE test | MAE test | R² test | MAPE test |
 |--------|-------------|-------------|-----------|----------|---------|-----------|
-| RandomForest | 4232.4137 | 1375.3184 | 3749.6664 | 2002.3672 | 0.803494 | 103.1333 |
-| XGBoost | 2602.3778 | 838.1867 | 2338.6075 | 1217.2798 | 0.923563 | 53.0074 |
-| SVR | 5902.0769 | 1756.3972 | 4908.5281 | 1808.0625 | 0.663262 | 40.7558 |
-| Stacking | 2659.5655 | 593.1875 | 2212.8853 | 1183.1971 | 0.93156 | 42.4162 |
-| Blending | 3708.6263 | 1363.0939 | 2921.9377 | 1349.7331 | 0.880675 | 46.7076 |
+| RandomForest | 64.2792 | 6.7788 | 73.3859 | 42.4271 | 0.897873 | 38.3875 |
+| XGBoost | 29.4993 | 3.5068 | 29.9698 | 18.6687 | 0.982967 | 11.7142 |
+| SVR | 25.4655 | 3.9084 | 25.7942 | 14.3474 | 0.987383 | 8.6414 |
+| Stacking | 29.7474 | 4.7494 | 32.5168 | 17.9727 | 0.979949 | 12.8371 |
+| Blending | 38.8664 | 7.4131 | 32.2673 | 17.1081 | 0.980256 | 11.2929 |
 
 ---
 
 ## 1. Test de Friedman
 
-- **Estadístico**: `35.92`
+- **Estadístico**: `37.04`
 - **p-value**: `0.0` ***
 - **Interpretación**: p=0.0000 (***). ✓ Hay diferencias significativas entre los modelos.
 
@@ -22,47 +22,47 @@
 
 ## 2. Test de Wilcoxon (post-hoc)
 
-**XGBoost vs RandomForest**
+**SVR vs RandomForest**
 - Estadístico: `55.0`
 - p-value: `0.000977` ***
-- Interpretación: XGBoost es significativamente mejor que RandomForest.
+- Interpretación: SVR es significativamente mejor que RandomForest.
 
-**XGBoost vs SVR**
-- Estadístico: `55.0`
-- p-value: `0.000977` ***
-- Interpretación: XGBoost es significativamente mejor que SVR.
-
-**XGBoost vs Stacking**
-- Estadístico: `34.0`
-- p-value: `0.27832` ns
-- Interpretación: Sin diferencia significativa con Stacking.
-
-**XGBoost vs Blending**
+**SVR vs XGBoost**
 - Estadístico: `54.0`
 - p-value: `0.001953` **
-- Interpretación: XGBoost es significativamente mejor que Blending.
+- Interpretación: SVR es significativamente mejor que XGBoost.
+
+**SVR vs Stacking**
+- Estadístico: `55.0`
+- p-value: `0.000977` ***
+- Interpretación: SVR es significativamente mejor que Stacking.
+
+**SVR vs Blending**
+- Estadístico: `55.0`
+- p-value: `0.000977` ***
+- Interpretación: SVR es significativamente mejor que Blending.
 
 
 ---
 
 ## 3. t-test Corregido (Nadeau-Bengio)
 
-- **p-value**: `0.778202` ns
-- **Interpretación**: p=0.7782 (ns). Sin diferencia significativa tras corrección.
+- **p-value**: `0.007298` **
+- **Interpretación**: p=0.0073 (**). Diferencia significativa tras corrección.
 
 ---
 
 ## 4. Bootstrap Confidence Interval
 
 - **p-value**: `` 
-- **Interpretación**: RMSE del mejor modelo: 2338.6075 (IC 95%: [1837.1388, 2924.8365])
-- **IC 95%**: [1837.138797, 2924.836492]
+- **Interpretación**: RMSE del mejor modelo: 25.7942 (IC 95%: [20.6325, 31.3956])
+- **IC 95%**: [20.632503, 31.395599]
 
 ---
 
 ## 5. Test de Shapiro-Wilk (normalidad)
 
-- **Estadístico**: `0.709604`
+- **Estadístico**: `0.745457`
 - **p-value**: `0.0` ***
 - **Interpretación**: p=0.0000 (***). Los residuales NO siguen una distribución normal.
 

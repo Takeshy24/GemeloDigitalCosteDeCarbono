@@ -5,6 +5,10 @@ psycopg[binary]==3.2.6
 pydantic-settings==2.8.1
 httpx==0.28.1
 
+# Asistente del gemelo digital: orquestación LLM en FastAPI
+langchain>=0.3.25,<0.4.0
+langchain-google-genai>=2.1.0,<3.0.0
+
 # ML / Data Science
 scikit-learn>=1.4.0
 xgboost>=2.0.0

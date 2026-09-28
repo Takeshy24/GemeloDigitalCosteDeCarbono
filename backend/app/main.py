@@ -2,7 +2,6 @@ from contextlib import asynccontextmanager
 from datetime import datetime, timezone
 from typing import Any
 import asyncio
-import httpx
 from fastapi import BackgroundTasks, Depends, FastAPI, HTTPException, Response, status
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
@@ -136,15 +135,20 @@ def local_advice(project: dict[str, Any], assessment: dict[str, Any], prompt: st
 @app.post("/api/ai/analyze")
 async def analyze_ai(request: AIRequest):
     settings = get_settings()
-    if not settings.openai_api_key:
+    if not settings.gemini_api_key:
         return {"success": True, "source": "local-carbon-advisor", "analysis": local_advice(request.project, request.assessment, request.userPrompt)}
-    system = "Eres un especialista ISO 14040/44 en ACV de gemelos digitales agrícolas. Responde en español, con recomendaciones concretas, trazables y prudentes."
-    payload = {"model": settings.openai_model, "messages": [{"role": "system", "content": system}, {"role": "user", "content": f"Proyecto: {request.project}. Evaluación: {request.assessment}. Consulta: {request.userPrompt}"}], "temperature": 0.3}
     try:
-        async with httpx.AsyncClient(timeout=30) as client:
-            response = await client.post("https://api.openai.com/v1/chat/completions", headers={"Authorization": f"Bearer {settings.openai_api_key}"}, json=payload)
-            response.raise_for_status()
-        return {"success": True, "source": settings.openai_model, "analysis": response.json()["choices"][0]["message"]["content"]}
+        # La invocación del SDK de LangChain es síncrona; se desplaza del event loop.
+        from .ai.langchain_assistant import ask_digital_twin
+        analysis = await asyncio.to_thread(
+            ask_digital_twin,
+            api_key=settings.gemini_api_key,
+            model=settings.gemini_model,
+            project=request.project,
+            assessment=request.assessment,
+            question=request.userPrompt,
+        )
+        return {"success": True, "source": f"langchain · {settings.gemini_model}", "analysis": analysis}
     except Exception:
         return {"success": True, "source": "local-carbon-advisor", "analysis": local_advice(request.project, request.assessment, request.userPrompt)}
 

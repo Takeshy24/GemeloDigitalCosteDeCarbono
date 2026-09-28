@@ -1,35 +1,32 @@
 {
-  "model_name": "CarbonTwin_XGBoost",
-  "base_algorithm": "XGBoost",
+  "model_name": "CarbonTwin_SVR",
+  "base_algorithm": "SVR",
   "task": "regression",
   "target": "total_co2e_kg",
   "framework": "TensorFlow/Keras (distilled from sklearn)",
-  "exported_at": "2026-09-02T20:30:58.492289+00:00",
+  "exported_at": "2026-09-28T12:23:32.767755+00:00",
   "files": {
     "h5_model": "backend\\ml_artifacts\\best_model.h5",
     "sklearn_backup": "backend\\ml_artifacts\\best_model_sklearn.pkl",
     "preprocessor": "backend\\ml_artifacts\\preprocessor.pkl"
   },
   "performance": {
-    "RMSE": 2338.6075,
-    "MAE": 1217.2798,
-    "R2": 0.923563,
-    "MAPE": 53.0074,
-    "cv_rmse_mean": 2602.3778,
-    "cv_rmse_std": 838.1867
+    "RMSE": 25.7942,
+    "MAE": 14.3474,
+    "R2": 0.987383,
+    "MAPE": 8.6414,
+    "cv_rmse_mean": 25.4655,
+    "cv_rmse_std": 3.9084
   },
   "distillation": {
     "keras_sklearn_correlation": 0.0,
     "distillation_rmse": 0.0
   },
   "best_hyperparams": {
-    "subsample": 0.8,
-    "reg_lambda": 2.0,
-    "reg_alpha": 0.5,
-    "n_estimators": 500,
-    "max_depth": 4,
-    "learning_rate": 0.1,
-    "colsample_bytree": 0.8
+    "kernel": "rbf",
+    "gamma": "auto",
+    "epsilon": 0.01,
+    "C": 500
   },
   "architecture": {
     "type": "Feedforward Neural Network",

@@ -1,7 +1,7 @@
 {
   "friedman": {
     "test": "Friedman",
-    "statistic": 35.92,
+    "statistic": 37.04,
     "p_value": 0.0,
     "significant": true,
     "significance": "***",
@@ -17,64 +17,64 @@
   "wilcoxon": [
     {
       "test": "Wilcoxon signed-rank",
-      "comparison": "XGBoost vs RandomForest",
+      "comparison": "SVR vs RandomForest",
       "statistic": 55.0,
       "p_value": 0.000977,
       "significant": true,
       "significance": "***",
-      "interpretation": "XGBoost es significativamente mejor que RandomForest."
+      "interpretation": "SVR es significativamente mejor que RandomForest."
     },
     {
       "test": "Wilcoxon signed-rank",
-      "comparison": "XGBoost vs SVR",
-      "statistic": 55.0,
-      "p_value": 0.000977,
-      "significant": true,
-      "significance": "***",
-      "interpretation": "XGBoost es significativamente mejor que SVR."
-    },
-    {
-      "test": "Wilcoxon signed-rank",
-      "comparison": "XGBoost vs Stacking",
-      "statistic": 34.0,
-      "p_value": 0.27832,
-      "significant": false,
-      "significance": "ns",
-      "interpretation": "Sin diferencia significativa con Stacking."
-    },
-    {
-      "test": "Wilcoxon signed-rank",
-      "comparison": "XGBoost vs Blending",
+      "comparison": "SVR vs XGBoost",
       "statistic": 54.0,
       "p_value": 0.001953,
       "significant": true,
       "significance": "**",
-      "interpretation": "XGBoost es significativamente mejor que Blending."
+      "interpretation": "SVR es significativamente mejor que XGBoost."
+    },
+    {
+      "test": "Wilcoxon signed-rank",
+      "comparison": "SVR vs Stacking",
+      "statistic": 55.0,
+      "p_value": 0.000977,
+      "significant": true,
+      "significance": "***",
+      "interpretation": "SVR es significativamente mejor que Stacking."
+    },
+    {
+      "test": "Wilcoxon signed-rank",
+      "comparison": "SVR vs Blending",
+      "statistic": 55.0,
+      "p_value": 0.000977,
+      "significant": true,
+      "significance": "***",
+      "interpretation": "SVR es significativamente mejor que Blending."
     }
   ],
   "nadeau_bengio": {
     "test": "Corrected paired t-test (Nadeau-Bengio)",
-    "t_statistic": 0.29025,
-    "p_value": 0.778202,
-    "significant": false,
-    "significance": "ns",
+    "t_statistic": 3.447962,
+    "p_value": 0.007298,
+    "significant": true,
+    "significance": "**",
     "n_folds": 10,
     "rho_correction": 0.1,
-    "interpretation": "p=0.7782 (ns). Sin diferencia significativa tras correcci\u00f3n.",
-    "comparison": "XGBoost vs Stacking"
+    "interpretation": "p=0.0073 (**). Diferencia significativa tras correcci\u00f3n.",
+    "comparison": "SVR vs XGBoost"
   },
   "bootstrap_ci": {
     "test": "Bootstrap CI",
     "n_bootstrap": 2000,
-    "point_rmse": 2338.607508,
-    "ci_lower": 1837.138797,
-    "ci_upper": 2924.836492,
+    "point_rmse": 25.794151,
+    "ci_lower": 20.632503,
+    "ci_upper": 31.395599,
     "confidence_level": "95%",
-    "interpretation": "RMSE del mejor modelo: 2338.6075 (IC 95%: [1837.1388, 2924.8365])"
+    "interpretation": "RMSE del mejor modelo: 25.7942 (IC 95%: [20.6325, 31.3956])"
   },
   "shapiro_wilk": {
     "test": "Shapiro-Wilk (normalidad de residuales)",
-    "statistic": 0.709604,
+    "statistic": 0.745457,
     "p_value": 0.0,
     "significant": true,
     "significance": "***",
@@ -82,9 +82,9 @@
   },
   "breusch_pagan": {
     "test": "Breusch-Pagan (homocedasticidad)",
-    "lm_statistic": 33.67054,
+    "lm_statistic": 41.574373,
     "p_value": 0.0,
-    "f_statistic": 35.957258,
+    "f_statistic": 45.163352,
     "f_p_value": 0.0,
     "significant": true,
     "significance": "***",
