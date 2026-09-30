@@ -44,6 +44,7 @@ El repositorio incluye un `Dockerfile` que permite la containerización del pipe
 
 ```bash
 docker build -t carbontwin:1.0.0 .
+docker run --rm carbontwin:1.0.0
 
 ## Seguridad
 
