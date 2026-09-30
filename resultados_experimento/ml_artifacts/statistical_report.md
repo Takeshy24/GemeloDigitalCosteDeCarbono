@@ -4,18 +4,18 @@
 
 | Modelo | CV-RMSE (μ) | CV-RMSE (σ) | RMSE test | MAE test | R² test | MAPE test |
 |--------|-------------|-------------|-----------|----------|---------|-----------|
-| RandomForest | 4232.4137 | 1375.3184 | 3749.6664 | 2002.3672 | 0.803494 | 103.1333 |
-| XGBoost | 2602.3778 | 838.1867 | 2338.6075 | 1217.2798 | 0.923563 | 53.0074 |
-| SVR | 5902.0769 | 1756.3972 | 4908.5281 | 1808.0625 | 0.663262 | 40.7558 |
-| Stacking | 2659.5655 | 593.1875 | 2212.8853 | 1183.1971 | 0.93156 | 42.4162 |
-| Blending | 3708.6263 | 1363.0939 | 2921.9377 | 1349.7331 | 0.880675 | 46.7076 |
+| RandomForest | 3699.2959 | 1287.5878 | 3193.9958 | 1681.3852 | 0.85742 | 73.8022 |
+| XGBoost | 2980.1675 | 905.1661 | 2909.5852 | 1513.1987 | 0.881682 | 58.7049 |
+| SVR | 6029.2342 | 1818.0826 | 5030.3698 | 1881.3268 | 0.646337 | 45.978 |
+| Stacking | 3028.5754 | 606.7342 | 2654.8385 | 1459.7429 | 0.901493 | 44.6908 |
+| Blending | 3756.9484 | 1340.9736 | 3021.9306 | 1444.9496 | 0.872368 | 47.9325 |
 
 ---
 
 ## 1. Test de Friedman
 
-- **Estadístico**: `35.92`
-- **p-value**: `0.0` ***
+- **Estadístico**: `32.24`
+- **p-value**: `2e-06` ***
 - **Interpretación**: p=0.0000 (***). ✓ Hay diferencias significativas entre los modelos.
 
 ---
@@ -33,8 +33,8 @@
 - Interpretación: XGBoost es significativamente mejor que SVR.
 
 **XGBoost vs Stacking**
-- Estadístico: `34.0`
-- p-value: `0.27832` ns
+- Estadístico: `37.0`
+- p-value: `0.1875` ns
 - Interpretación: Sin diferencia significativa con Stacking.
 
 **XGBoost vs Blending**
@@ -47,22 +47,22 @@
 
 ## 3. t-test Corregido (Nadeau-Bengio)
 
-- **p-value**: `0.778202` ns
-- **Interpretación**: p=0.7782 (ns). Sin diferencia significativa tras corrección.
+- **p-value**: `0.810834` ns
+- **Interpretación**: p=0.8108 (ns). Sin diferencia significativa tras corrección.
 
 ---
 
 ## 4. Bootstrap Confidence Interval
 
 - **p-value**: `` 
-- **Interpretación**: RMSE del mejor modelo: 2338.6075 (IC 95%: [1837.1388, 2924.8365])
-- **IC 95%**: [1837.138797, 2924.836492]
+- **Interpretación**: RMSE del mejor modelo: 2909.5852 (IC 95%: [2280.9641, 3600.4499])
+- **IC 95%**: [2280.964056, 3600.44993]
 
 ---
 
 ## 5. Test de Shapiro-Wilk (normalidad)
 
-- **Estadístico**: `0.709604`
+- **Estadístico**: `0.712241`
 - **p-value**: `0.0` ***
 - **Interpretación**: p=0.0000 (***). Los residuales NO siguen una distribución normal.
 

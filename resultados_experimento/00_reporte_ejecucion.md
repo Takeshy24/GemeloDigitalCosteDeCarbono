@@ -1,6 +1,6 @@
 # Reporte de ejecución experimental — AP-9 Carbon Twin
 
-Fecha UTC: 2026-09-15T06:20:13.852898+00:00  
+Fecha UTC: 2026-09-30T06:56:26.348183+00:00  
 Semilla: 42. Horizonte: 3 años. Proyecto aislado: `EXP-AP9-42`.
 
 ## Alcance y motor
@@ -20,7 +20,7 @@ La variante Edge-heavy con solar reduce 67.14% frente a Cloud-heavy. Por tanto, 
 Los tres casos se ejecutaron contra el motor. La diferencia es fija (25,50 kg CO2e) y se explica por la red dedicada fija incorporada por el motor; no se ajustaron resultados. Ver `02_validacion_motor_lca.csv`.
 
 ## ML
-El mejor modelo por CV-RMSE fue XGBoost. XGBoost reprodujo RMSE=2338.6075 kg CO2e y R²=0.923563. Las pruebas estadísticas completas están en `10_pruebas_estadisticas.csv`.
+El mejor modelo por CV-RMSE fue XGBoost. XGBoost reprodujo RMSE=2909.5852 kg CO2e y R²=0.881682. Las pruebas estadísticas completas están en `10_pruebas_estadisticas.csv`.
 
 ## Reproducción
 Ejecutar, desde la raíz del proyecto:

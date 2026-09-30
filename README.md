@@ -36,6 +36,15 @@ Aplicación de análisis del coste de carbono (ACV) de gemelos digitales agríco
 
 4. Abre `http://localhost:3000`. La primera carga inserta los datos de demostración en PostgreSQL y, a partir de ahí, cada alta, edición y eliminación se sincroniza con la API y se audita.
 
+## Uso con Docker
+
+El repositorio incluye un `Dockerfile` que permite la containerización del pipeline completo, garantizando la reproducibilidad en cualquier sistema operativo.
+
+### Construir la imagen
+
+```bash
+docker build -t carbontwin:1.0.0 .
+
 ## Seguridad
 
 La contraseña de PostgreSQL no está escrita en el frontend ni en la API: se inyecta por variable de entorno. Antes de desplegar, sustituye `2005` por una contraseña larga, habilita TLS, restringe `CORS_ORIGINS` y añade autenticación OIDC/JWT.
