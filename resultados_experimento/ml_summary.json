@@ -1,6 +1,6 @@
 {
   "best_model": "XGBoost",
-  "elapsed_seconds": 238.19788186499954,
+  "elapsed_seconds": 244.22419233999972,
   "metrics": [
     {
       "model": "RandomForest",

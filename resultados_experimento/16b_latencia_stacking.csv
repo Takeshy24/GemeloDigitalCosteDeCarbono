@@ -1,0 +1,2 @@
+modelo,n_muestras,latencia_mediana_ms,latencia_media_ms,latencia_p95_ms,latencia_p99_ms,latencia_min_ms,latencia_max_ms,latencia_std_ms
+Stacking,500,19.1608,21.3814,34.3411,49.211,18.7051,92.2658,6.5536
