@@ -29,6 +29,9 @@ STAT_JSON_PATH = ARTIFACTS_DIR / "statistical_tests.json"
 MODEL_CARD_PATH = ARTIFACTS_DIR / "model_card.json"
 PLOTS_DIR = ARTIFACTS_DIR / "plots"
 EDA_DIR = ARTIFACTS_DIR / "eda"
+REAL_DATASET_PATH = ARTIFACTS_DIR / "real_dataset.csv"
+SYNTHETIC_DATASET_PATH = ARTIFACTS_DIR / "dataset.csv"
+REAL_DATASET_METADATA_PATH = ARTIFACTS_DIR / "real_dataset_metadata.json"
 
 
 def load_existing_report() -> dict[str, Any] | None:
@@ -59,13 +62,18 @@ def load_statistical_tests() -> dict[str, Any]:
     return {}
 
 
-def load_dataset_for_eda(n_samples: int = 2500, seed: int = 42) -> pd.DataFrame:
-    """Genera o carga el dataset para visualizaciones EDA en el laboratorio."""
+def load_dataset_for_eda(
+    n_samples: int = 2500,
+    seed: int = 42,
+    dataset_source: str = "real",
+) -> pd.DataFrame:
+    """Carga el dataset seleccionado para las visualizaciones EDA."""
     from backend.app.ml.data_generation import generate_dataset
-    dataset_csv = ARTIFACTS_DIR / "dataset.csv"
+    dataset_csv = REAL_DATASET_PATH if dataset_source == "real" else SYNTHETIC_DATASET_PATH
     if dataset_csv.exists():
         try:
-            return pd.read_csv(dataset_csv)
+            df = pd.read_csv(dataset_csv)
+            return df if dataset_source == "real" else df.head(n_samples)
         except Exception:
             pass
     return generate_dataset(n_samples=n_samples, seed=seed)
@@ -106,12 +114,14 @@ def execute_pipeline(
     n_iter_search: int,
     cv_folds: int,
     final_cv_folds: int,
+    csv_path: str | None = None,
     progress_callback: Callable[[str, int], None] | None = None,
 ) -> dict[str, Any]:
     """Ejecuta el pipeline completo de ML con parámetros personalizados."""
     from backend.app.ml.pipeline import run_pipeline
 
     return run_pipeline(
+        csv_path=csv_path,
         n_samples=n_samples,
         seed=seed,
         n_iter_search=n_iter_search,

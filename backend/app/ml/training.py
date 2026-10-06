@@ -35,6 +35,7 @@ from sklearn.model_selection import (
     cross_val_score,
     train_test_split,
 )
+from sklearn.inspection import permutation_importance
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
@@ -214,6 +215,59 @@ def _plot_feature_importance(name: str, model, feature_names: list[str]) -> None
     fname = name.lower().replace(" ", "_")
     fig.savefig(out_dir / f"{fname}_feature_importance.png", dpi=150, bbox_inches="tight")
     plt.close(fig)
+
+
+def _compute_permutation_explainability(
+    name: str,
+    model,
+    X_test,
+    y_test: np.ndarray,
+    feature_names: list[str],
+    random_seed: int,
+) -> list[dict[str, float]]:
+    """Calcula importancia por permutación en el conjunto de prueba.
+
+    Esta explicación es agnóstica al modelo y cuantifica cuánto empeora el
+    RMSE cuando se rompe la relación entre una variable y el objetivo.
+    """
+    perm = permutation_importance(
+        model,
+        X_test,
+        y_test,
+        scoring="neg_root_mean_squared_error",
+        n_repeats=8,
+        random_state=random_seed,
+        n_jobs=-1,
+    )
+    order = np.argsort(perm.importances_mean)[::-1]
+    rows = [
+        {
+            "feature": str(feature_names[i]),
+            "importance_mean": round(float(perm.importances_mean[i]), 6),
+            "importance_std": round(float(perm.importances_std[i]), 6),
+        }
+        for i in order[:20]
+    ]
+
+    out_dir = ARTIFACTS_DIR / "plots"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    top = rows[:15]
+    fig, ax = plt.subplots(figsize=(10, 5))
+    ax.barh(
+        [row["feature"] for row in reversed(top)],
+        [row["importance_mean"] for row in reversed(top)],
+        xerr=[row["importance_std"] for row in reversed(top)],
+        color="#0F766E",
+        alpha=0.88,
+    )
+    ax.set_xlabel("Disminución del score RMSE al permutar la variable")
+    ax.set_title(f"Explicabilidad global por permutación — {name}")
+    fig.tight_layout()
+    fig.savefig(out_dir / "winner_permutation_importance.png", dpi=160, bbox_inches="tight")
+    plt.close(fig)
+
+    pd.DataFrame(rows).to_csv(ARTIFACTS_DIR / "permutation_importance.csv", index=False)
+    return rows
 
 
 # ---------------------------------------------------------------------------
@@ -401,6 +455,16 @@ def train_all_models(
     # ------------------------------------------------------------------
     best_name = min(results, key=lambda n: results[n]["cv_rmse_mean"])
     print(f"\n  ★ Mejor modelo: {best_name} (CV-RMSE={results[best_name]['cv_rmse_mean']:.4f})")
+
+    # Explicabilidad global del ganador, calculada exclusivamente sobre test.
+    results[best_name]["permutation_importance"] = _compute_permutation_explainability(
+        best_name,
+        best_models[best_name],
+        X_test,
+        y_test,
+        all_feature_names,
+        random_seed,
+    )
 
     # ------------------------------------------------------------------
     # Gráfica comparativa
