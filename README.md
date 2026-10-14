@@ -51,11 +51,15 @@ docker build -t carbontwin:1.0.0 .
 docker run --rm carbontwin:1.0.0
 ```
 
-El Dockerfile raíz ejecuta experimentos; Render utiliza los runtimes nativos definidos en `render.yaml`.
+El Dockerfile raíz ejecuta experimentos. El servicio web de frontend y API utiliza `Dockerfile.render`, compatible con Render y Railway.
 
 ## Render
 
 Consulta [la guía de despliegue](docs/RENDER_DEPLOYMENT.md) y el [análisis técnico](docs/DEPLOYMENT_REVIEW.md).
+
+## Railway
+
+Consulta [la guía de Railway](docs/RAILWAY_DEPLOYMENT.md) para reutilizar la imagen Docker en un único servicio con SQLite temporal. El acceso a la cuenta y la verificación pública del despliegue siguen pendientes.
 
 ## Documentación en Jira
 
