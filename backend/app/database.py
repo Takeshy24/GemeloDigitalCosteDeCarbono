@@ -11,7 +11,13 @@ def normalize_database_url(value: str):
     return url
 
 
-engine = create_engine(normalize_database_url(get_settings().database_url), pool_pre_ping=True)
+def create_database_engine(value: str):
+    url = normalize_database_url(value)
+    options = {"check_same_thread": False, "timeout": 30} if url.get_backend_name() == "sqlite" else {}
+    return create_engine(url, pool_pre_ping=True, connect_args=options)
+
+
+engine = create_database_engine(get_settings().database_url)
 SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False)
 
 

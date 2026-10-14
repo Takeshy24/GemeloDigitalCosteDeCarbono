@@ -13,7 +13,8 @@ FROM python:3.11-slim-bookworm AS runtime
 WORKDIR /app
 ENV PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1 \
     PIP_NO_CACHE_DIR=1 FRONTEND_DIST_DIR=/app/frontend \
-    ML_TRAINING_ENABLED=false OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
+    ML_TRAINING_ENABLED=false OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 \
+    DATABASE_URL=sqlite:////tmp/carbon-twin-demo.db
 RUN apt-get update && apt-get install -y --no-install-recommends libgomp1 \
     && rm -rf /var/lib/apt/lists/*
 COPY backend/requirements-runtime.txt ./backend/requirements-runtime.txt

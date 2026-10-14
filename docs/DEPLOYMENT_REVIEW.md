@@ -4,7 +4,7 @@ Fecha: 14 de octubre de 2026.
 
 ## Perfil actual solicitado: gratuito
 
-El usuario solicitó desplegar exclusivamente gratis. La configuración actual de `render.yaml` utiliza un servicio Docker Free que publica la exportación estática de Next.js desde FastAPI, más PostgreSQL Free. Se eliminó la necesidad de dos servicios y del disco de pago. La base Free vence a los 30 días; los modelos archivados se incluyen en la imagen y el entrenamiento permanece deshabilitado. Véase `RENDER_DEPLOYMENT.md`. Los apartados siguientes conservan la revisión inicial del perfil persistente de pago, reemplazado por esta configuración.
+El usuario solicitó desplegar exclusivamente gratis. La configuración actual de `render.yaml` utiliza un servicio Docker Free que publica la exportación estática de Next.js desde FastAPI, con SQLite temporal, sin base externa. El cupo PostgreSQL Free del workspace está ocupado por otra aplicación. Se eliminó la necesidad de dos servicios y del disco de pago. Los datos SQLite se pierden al reiniciar o suspender; los modelos archivados se incluyen en la imagen y el entrenamiento permanece deshabilitado. Véase `RENDER_DEPLOYMENT.md`. Los apartados siguientes conservan la revisión inicial del perfil persistente de pago, reemplazado por esta configuración.
 
 ## Arquitectura verificada
 

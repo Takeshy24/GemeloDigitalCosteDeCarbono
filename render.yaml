@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=https://render.com/schema/render.yaml.json
-# Demo Free: PostgreSQL vence a los 30 días; sin discos ni planes de pago.
+# Demo Free con SQLite temporal. Los datos se pierden al reiniciar/suspender.
 services:
   - type: web
     name: carbon-twin-ap9
@@ -11,16 +11,6 @@ services:
     healthCheckPath: /api/ready
     envVars:
       - key: DATABASE_URL
-        fromDatabase:
-          name: carbon-twin-db
-          property: connectionString
+        value: sqlite:////tmp/carbon-twin-demo.db
       - key: ML_TRAINING_ENABLED
         value: "false"
-databases:
-  - name: carbon-twin-db
-    region: oregon
-    plan: free
-    databaseName: carbon_twins
-    user: carbon_user
-    postgresMajorVersion: "16"
-    ipAllowList: []
