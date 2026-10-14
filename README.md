@@ -57,6 +57,10 @@ El Dockerfile raíz ejecuta experimentos; Render utiliza los runtimes nativos de
 
 Consulta [la guía de despliegue](docs/RENDER_DEPLOYMENT.md) y el [análisis técnico](docs/DEPLOYMENT_REVIEW.md).
 
+## Documentación en Jira
+
+La documentación técnica y funcional actual está publicada en [KAN-4: Carbon twin](https://takeshydiaz05.atlassian.net/browse/KAN-4). Su [versión Markdown](docs/JIRA_DOCUMENTATION.md) incluye módulos, arquitectura/API, cálculo de carbono, ML e IA, despliegue y pruebas.
+
 ## Seguridad
 
 La contraseña de PostgreSQL no está escrita en el frontend ni en la API: se inyecta por variable de entorno. Antes de desplegar, sustituye `2005` por una contraseña larga, habilita TLS, restringe `CORS_ORIGINS` y añade autenticación OIDC/JWT.

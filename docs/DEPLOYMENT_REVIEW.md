@@ -8,7 +8,7 @@ La aplicación activa utiliza React 19 y Next.js 15; `package.json` compila y ar
 
 ## GitHub
 
-Se verificó el repositorio remoto `Takeshy24/GemeloDigitalCosteDeCarbono` y se leyó `package.json` mediante la integración GitHub. Al iniciar, `main` remoto estaba en `3d1bb61` y la copia local en `6705d19`; además existían modificaciones locales de Langflow y del asistente. Se conservaron en un commit de la rama `codex/render-deployment` y se integraron los cambios del remoto sin conflictos. La preparación se publica como propuesta revisable en esa rama.
+Se verificó el repositorio remoto `Takeshy24/GemeloDigitalCosteDeCarbono` y se leyó `package.json` mediante la integración GitHub. Al iniciar, `main` remoto estaba en `3d1bb61` y la copia local en `6705d19`; además existían modificaciones locales de Langflow y del asistente. Se conservaron en un commit de la rama `codex/render-deployment` y se integraron los cambios del remoto sin conflictos. El usuario autorizó integrar el [PR #1](https://github.com/Takeshy24/GemeloDigitalCosteDeCarbono/pull/1) en `main`; el merge se confirmó con el commit `173a34942129b2b5b8e1a353a67452eb730463c0`.
 
 ## Problemas corregidos
 
@@ -31,7 +31,7 @@ Se verificó el repositorio remoto `Takeshy24/GemeloDigitalCosteDeCarbono` y se 
 - `render.yaml` válido contra el esquema oficial de Render.
 - `npm ci` comprobado mediante resolución del lockfile.
 - Compilación final y arranque de Next.js en modo producción correctos; proxy hacia FastAPI probado con salud, disponibilidad de PostgreSQL, estado y reporte ML (HTTP 200) y rechazo de entrenamiento (HTTP 403 esperado).
-- Disponibilidad de paquetes Python para Linux/Python 3.11 comprobada mediante resolución de wheels. La instalación y ejecución Linux se verifican adicionalmente con GitHub Actions.
+- Disponibilidad de paquetes Python para Linux/Python 3.11 comprobada mediante resolución de wheels. Instalación, compilación y pruebas en Linux/PostgreSQL 16 aprobadas en [GitHub Actions](https://github.com/Takeshy24/GemeloDigitalCosteDeCarbono/actions/runs/38619279347), sobre el último commit del PR antes del merge.
 
 Las pruebas no ejecutan un entrenamiento completo, no invocan proveedores de IA ni crean servicios en Render. La prueba local usa PostgreSQL 18; CI usa PostgreSQL 16, coincidiendo con el Blueprint.
 
@@ -41,6 +41,6 @@ Los endpoints de recursos no tienen autenticación ni autorización; los roles s
 
 ## Documentación en Jira
 
-El usuario confirmó que no había utilizado Jira, que acaba de crear una cuenta y que todavía no existe documentación del proyecto allí. Por tanto, queda pendiente **crear y publicar la documentación en Jira**, usando el sitio/proyecto correspondiente y una conexión Atlassian autenticada.
+La documentación se publicó en la descripción de [KAN-4: Carbon twin](https://takeshydiaz05.atlassian.net/browse/KAN-4), en el sitio proporcionado por el usuario. Incluye propósito y módulos, arquitectura y API, motor de carbono, ML e IA, instalación y Render, pruebas y trabajo pendiente. Se verificó su persistencia recargando Jira y comprobando las seis secciones y referencias.
 
-La documentación disponible está en GitHub: este informe, `docs/RENDER_DEPLOYMENT.md`, `docs/DOCUMENTO_1_SISTEMA_Y_MODULOS_EXPOSICION.md` y `docs/DOCUMENTO_2_MACHINE_LEARNING_ESTADISTICA_LABORATORIO.md`. Al publicar en Jira, se deben enlazar esos documentos y el PR de preparación para Render. Esta actualización registra la aclaración del usuario; no se han creado registros ni documentos en Jira.
+La documentación se redactó a partir del código, sin trasladar afirmaciones antiguas sobre JWT, aislamiento multitenant o un ganador ML distinto al artefacto actual. Incluye enlaces a `main`, al PR integrado y a las guías del repositorio. La versión Markdown está en [JIRA_DOCUMENTATION.md](JIRA_DOCUMENTATION.md). Este informe y `RENDER_DEPLOYMENT.md` conservan el historial de preparación; los documentos de exposición anteriores son material histórico y pueden contener afirmaciones que requieren revisión.
