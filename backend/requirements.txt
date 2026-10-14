@@ -6,8 +6,10 @@ pydantic-settings==2.8.1
 httpx==0.28.1
 
 # Asistente del gemelo digital: orquestación LLM en FastAPI
-langchain>=0.3.25,<0.4.0
-langchain-google-genai>=2.1.0,<3.0.0
+langchain>=1.4.0,<2.0.0
+langchain-google-genai>=4.4.0,<5.0.0
+# google-auth exigirá esta versión mínima para transporte gRPC desde octubre de 2026.
+grpcio>=1.83.0,<2.0.0
 
 # ML / Data Science
 scikit-learn>=1.4.0

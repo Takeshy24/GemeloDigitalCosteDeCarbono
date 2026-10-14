@@ -7,7 +7,7 @@ Aplicación de análisis del coste de carbono (ACV) de gemelos digitales agríco
 - **Frontend:** React 19 + Next.js 15 (`http://localhost:3000`).
 - **Backend:** FastAPI (`http://localhost:8000`, documentación en `/docs`).
 - **Datos:** PostgreSQL 16 para proyectos, sensores, Edge, nube, gemelos, factores, escenarios, usuarios y auditoría.
-- **IA:** asesor local de carbono; al definir `OPENAI_API_KEY`, el backend consulta un modelo OpenAI compatible.
+- **IA:** Langflow como orquestador visual, LangChain + Gemini como segundo nivel y asesor local como respaldo final. Todos reciben únicamente el contexto verificado del gemelo.
 
 ## Inicio rápido local
 
@@ -26,6 +26,10 @@ Aplicación de análisis del coste de carbono (ACV) de gemelos digitales agríco
    python -m pip install -r backend/requirements.txt
    python -m uvicorn backend.app.main:app --reload --port 8000
    ```
+
+   Para habilitar LangChain, define `GEMINI_API_KEY` y, opcionalmente, `GEMINI_MODEL` en `backend/.env`. Puedes confirmar el estado sin exponer la clave en `GET /api/health`; el campo `ai.langchain.configured` debe ser `true`.
+
+   Para habilitar también Langflow, sigue [langflow/README.md](langflow/README.md). Cuando esté configurado, `ai.primary` será `langflow`; si el servicio no responde, la API continúa automáticamente con LangChain.
 
 4. En otra terminal, crea `.env.local` desde `.env.local.example`, instala dependencias y ejecuta el frontend:
 

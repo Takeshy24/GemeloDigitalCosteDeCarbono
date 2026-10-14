@@ -57,13 +57,18 @@ export const AIModule: React.FC<AIModuleProps> = ({
     setIsLoading(true);
 
     try {
-      const data = await carbonApi.analyze(project, assessment, query);
+      const data = await carbonApi.analyze(
+        project,
+        assessment,
+        query,
+        chatHistory.map(({ role, text }) => ({ role, text }))
+      );
       setChatHistory([
         ...updatedHistory,
         {
           role: 'assistant',
           text: data.analysis || 'Análisis completado.',
-          source: data.source || 'gemini-3.7-flash'
+          source: data.source || 'langchain'
         }
       ]);
     } catch (e: any) {

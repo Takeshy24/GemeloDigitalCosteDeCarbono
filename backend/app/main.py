@@ -2,6 +2,7 @@ from contextlib import asynccontextmanager
 from datetime import datetime, timezone
 from typing import Any
 import asyncio
+import logging
 from fastapi import BackgroundTasks, Depends, FastAPI, HTTPException, Response, status
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
@@ -12,6 +13,7 @@ from .database import Base, engine, get_db
 from .models import Resource
 
 RESOURCE_KINDS = {"projects", "sensors", "edge", "cloud", "twins", "emission-factors", "scenarios", "users", "audit-logs"}
+logger = logging.getLogger(__name__)
 
 
 @asynccontextmanager
@@ -34,10 +36,16 @@ class BootstrapInput(BaseModel):
     resources: dict[str, list[dict[str, Any]]]
 
 
+class AIChatMessage(BaseModel):
+    role: str = Field(pattern="^(user|assistant)$")
+    text: str = Field(min_length=1, max_length=4000)
+
+
 class AIRequest(BaseModel):
-    project: dict[str, Any] = {}
-    assessment: dict[str, Any] = {}
+    project: dict[str, Any] = Field(default_factory=dict)
+    assessment: dict[str, Any] = Field(default_factory=dict)
     userPrompt: str = Field(min_length=1, max_length=4000)
+    history: list[AIChatMessage] = Field(default_factory=list, max_length=20)
 
 
 class MLTrainRequest(BaseModel):
@@ -67,7 +75,21 @@ def valid_kind(kind: str):
 
 @app.get("/api/health")
 def health():
-    return {"status": "ok", "service": "carbon-twin-api", "timestamp": datetime.now(timezone.utc).isoformat()}
+    settings = get_settings()
+    return {
+        "status": "ok",
+        "service": "carbon-twin-api",
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "ai": {
+            "primary": "langflow" if settings.langflow_configured else "langchain",
+            "langflow": {"configured": settings.langflow_configured},
+            "langchain": {
+                "configured": bool(settings.gemini_api_key),
+                "provider": "google-gemini",
+                "model": settings.gemini_model,
+            },
+        },
+    }
 
 
 @app.get("/api/resources/{kind}")
@@ -135,6 +157,24 @@ def local_advice(project: dict[str, Any], assessment: dict[str, Any], prompt: st
 @app.post("/api/ai/analyze")
 async def analyze_ai(request: AIRequest):
     settings = get_settings()
+    history = [message.model_dump() for message in request.history]
+    if settings.langflow_configured:
+        try:
+            from .ai.langflow_client import run_langflow
+            analysis = await run_langflow(
+                base_url=settings.langflow_url,
+                flow_id=settings.langflow_flow_id,
+                api_key=settings.langflow_api_key,
+                project=request.project,
+                assessment=request.assessment,
+                question=request.userPrompt,
+                history=history,
+                timeout_seconds=settings.langflow_timeout_seconds,
+            )
+            return {"success": True, "source": "langflow", "analysis": analysis}
+        except Exception:
+            logger.exception("Falló Langflow; se intentará la cadena LangChain")
+
     if not settings.gemini_api_key:
         return {"success": True, "source": "local-carbon-advisor", "analysis": local_advice(request.project, request.assessment, request.userPrompt)}
     try:
@@ -147,9 +187,11 @@ async def analyze_ai(request: AIRequest):
             project=request.project,
             assessment=request.assessment,
             question=request.userPrompt,
+            history=history,
         )
         return {"success": True, "source": f"langchain · {settings.gemini_model}", "analysis": analysis}
     except Exception:
+        logger.exception("Falló la cadena LangChain; se usará el asesor local")
         return {"success": True, "source": "local-carbon-advisor", "analysis": local_advice(request.project, request.assessment, request.userPrompt)}
 
 
