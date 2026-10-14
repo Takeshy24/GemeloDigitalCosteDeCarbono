@@ -305,3 +305,8 @@ def ml_predict(request: PredictRequest):
         "model_used": "best_model_sklearn.pkl",
         "inputs": request.model_dump(),
     }
+
+
+from .frontend import mount_frontend
+
+mount_frontend(app, get_settings().frontend_dist_dir)

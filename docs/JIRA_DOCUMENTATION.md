@@ -112,6 +112,8 @@ Fuentes: [pipeline.py](https://github.com/Takeshy24/GemeloDigitalCosteDeCarbono/
 
 ## 5. Instalación y despliegue en Render
 
+**Actualización posterior:** el usuario solicitó un despliegue gratuito. El perfil actual reúne la exportación estática de Next.js y FastAPI en un servicio Docker Free, con PostgreSQL Free que vence a los 30 días, sin disco persistente. Los modelos se incluyen en la imagen. La referencia actual es [RENDER_DEPLOYMENT.md](RENDER_DEPLOYMENT.md); el detalle siguiente conserva la configuración inicial de pago como historial.
+
 Para desarrollo local, crea PostgreSQL y sus credenciales, copia `backend/.env.example` a `backend/.env`, instala las dependencias completas con `python -m pip install -r backend/requirements.txt` y arranca `python -m uvicorn backend.app.main:app --reload --port 8000`. Copia `.env.local.example` a `.env.local`, ejecuta `npm ci` y `npm run dev`. El frontend está en el puerto 3000 y el laboratorio opcional se inicia mediante `npm run ml:lab` en el puerto 8501.
 
 `render.yaml` define dos servicios web y PostgreSQL 16 en Oregon. Next.js usa Node 22 y FastAPI Python 3.11.11. Los servicios `starter`, la base `basic-256mb` y el disco persistente generan cargos cuando se crean; no se han creado recursos en Render durante esta preparación.

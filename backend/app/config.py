@@ -16,6 +16,7 @@ class Settings(BaseSettings):
     langflow_api_key: str | None = None
     langflow_timeout_seconds: float = 60.0
     ml_training_enabled: bool = True
+    frontend_dist_dir: Path | None = None
 
     @property
     def allowed_origins(self) -> list[str]:

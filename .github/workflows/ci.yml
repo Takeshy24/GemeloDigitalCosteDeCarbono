@@ -49,3 +49,8 @@ jobs:
       - run: pip install -r backend/requirements-runtime.txt pytest pyyaml jsonschema
       - run: python -m pytest backend/tests -q
       - run: python scripts/validate_render.py
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -f Dockerfile.render -t carbon-twin-render:test .

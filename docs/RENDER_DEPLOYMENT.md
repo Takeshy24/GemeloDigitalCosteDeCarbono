@@ -1,64 +1,50 @@
-# Despliegue de Carbon Twin AP-9 en Render
+# Despliegue gratuito de Carbon Twin AP-9 en Render
 
-Preparado el 14 de octubre de 2026. Repositorio: https://github.com/Takeshy24/GemeloDigitalCosteDeCarbono.
+Actualizado el 14 de octubre de 2026. Repositorio: https://github.com/Takeshy24/GemeloDigitalCosteDeCarbono, rama `main`.
 
-## Servicios definidos
+## Arquitectura Free
 
-`render.yaml` crea Next.js, FastAPI y PostgreSQL 16 en la misma región. El navegador llama a `/api` en el dominio de Next.js; Next.js reenvía las solicitudes a FastAPI por la red privada mediante `API_HOSTPORT`. No se fija una URL pública ni se depende del nombre final asignado por Render.
+`render.yaml` define un único servicio web Docker `carbon-twin-ap9` y una base PostgreSQL 16 `carbon-twin-db`, ambos en plan `free`. `Dockerfile.render` compila Next.js como exportación estática y FastAPI publica la interfaz y `/api/*` en el mismo dominio. No se necesitan un servidor Node en producción, `API_HOSTPORT`, URLs API públicas ni un disco de pago.
 
-| Recurso | Configuración |
+El Dockerfile raíz sigue ejecutando experimentos; el archivo correcto para desplegar la aplicación es `Dockerfile.render`. Su archivo `.dockerignore` específico conserva los fuentes del frontend y excluye credenciales, cachés y documentación.
+
+## Límites de gratuidad
+
+Render suspende un servicio Free tras 15 minutos sin tráfico y lo reactiva con la siguiente visita, con una espera inicial. El workspace dispone de 750 horas gratuitas al mes. PostgreSQL Free tiene 1 GB, admite una sola base Free por workspace y **vence a los 30 días**; exporta los datos antes de su vencimiento. Los archivos locales modificados no persisten tras suspensión, reinicio o redeploy, y Free no admite discos persistentes.
+
+Los modelos y reportes incluidos en Git se distribuyen dentro de la imagen. La predicción permanece disponible y `ML_TRAINING_ENABLED=false` evita entrenamientos que perderían sus resultados o excederían los recursos pequeños. Streamlit y Langflow no se despliegan con este Blueprint. Gemini es opcional y depende de la cuota de su proveedor.
+
+Selecciona solamente recursos Free. No añadas un método de pago para esta demo: si se agotan los límites incluidos, Render puede suspender servicios o compilaciones en vez de generar cargos. No cambies a planes de pago para resolver un límite sin autorización del usuario.
+
+## Desplegar
+
+1. En Render, New → Blueprint, conecta el repositorio y selecciona `main`.
+2. Usa `render.yaml` y confirma que el servicio y PostgreSQL indiquen Free, sin discos ni cargos.
+3. Render inyecta `DATABASE_URL` desde la base. La API normaliza la URL al driver psycopg 3 y crea las tablas al arrancar.
+4. Espera a que la imagen termine de construirse y `/api/ready` marque el servicio saludable.
+5. Abre la URL `onrender.com`. La primera carga inserta datos de demostración ausentes.
+6. Comprueba `/api/health`, `/api/ready`, `/api/ml/report`, recursos y predicción. Crea y elimina un proyecto de prueba y verifica persistencia al recargar.
+
+Si el workspace ya tiene una base PostgreSQL Free, reutiliza la conexión de la base correcta o solicita al usuario elegirla; no elimines una base existente para liberar el cupo. No cambies la base de datos de otro proyecto.
+
+## Configuración
+
+| Variable | Uso |
 | --- | --- |
-| Frontend | Node 22, `npm ci --include=dev && npm run build`, `npm start -- --hostname 0.0.0.0 --port $PORT` |
-| API | Python 3.11.11, `pip install -r backend/requirements-runtime.txt`, Uvicorn en `0.0.0.0:$PORT`, un worker |
-| Base de datos | PostgreSQL 16, conexión interna inyectada por Render, conexiones externas bloqueadas |
-| Modelos | Disco persistente de 1 GB en `/var/data`; copia inicial de los artefactos incluidos en Git |
-| Salud | Frontend `/`; API `/api/ready` comprueba PostgreSQL; `/api/health` informa del estado de IA |
+| DATABASE_URL | Conexión interna PostgreSQL, inyectada por Render |
+| FRONTEND_DIST_DIR | `/app/frontend`, definida en la imagen Docker |
+| ML_TRAINING_ENABLED | `false` para esta demo |
+| GEMINI_API_KEY, GEMINI_MODEL | IA generativa opcional; solo en backend |
+| LANGFLOW_URL, LANGFLOW_FLOW_ID, LANGFLOW_API_KEY | Orquestador opcional si existe un servicio adicional |
 
-Los dos servicios usan `starter` y PostgreSQL usa `basic-256mb`: **crear este Blueprint genera cargos**, incluido el disco. Comprueba el presupuesto en Render antes de crearlo. No se ha creado infraestructura como parte de esta preparación. Los recursos son apropiados para una demo con carga baja; mide memoria y latencia antes de ampliar su uso.
+No definas `NEXT_PUBLIC_API_URL` al construir esta imagen: el navegador llama a la API del mismo dominio. No publiques claves en GitHub, Jira ni variables `NEXT_PUBLIC_*`. Para desarrollo local, los comandos Next.js normales conservan el comportamiento anterior; `NEXT_STATIC_EXPORT=1` activa la exportación utilizada en Docker.
 
-## Crear el despliegue
+## Pruebas y operación
 
-1. Revisa el PR de la rama `codex/render-deployment` y confirma que las comprobaciones de GitHub Actions estén verdes.
-2. En Render, selecciona **New → Blueprint**, conecta GitHub y elige este repositorio. Para probar antes de integrar, selecciona `codex/render-deployment`; después de integrar el PR puedes usar `main`.
-3. Usa el archivo `render.yaml` de la raíz. No selecciones el Dockerfile raíz: ejecuta experimentos y termina, no sirve la aplicación web.
-4. Revisa región, planes y cargos, y crea los recursos. `DATABASE_URL` y `API_HOSTPORT` se conectan automáticamente. Mantén vacía o elimina `NEXT_PUBLIC_API_URL` en producción para usar el proxy del mismo dominio.
-5. Espera a que API y frontend estén saludables. Abre el dominio del frontend; la primera carga inserta los datos de demostración si todavía no existen.
-6. Comprueba `/api/ready`, `/api/health`, `/api/resources/projects`, `/api/ml/status` y `/api/ml/report` desde el dominio del frontend. Crea, edita y elimina un proyecto de prueba y verifica que los cambios sobreviven a una recarga.
+La API publica primero sus rutas y después los archivos estáticos: `/docs` y `/openapi.json` también funcionan. Las pruebas verifican que el frontend no oculte rutas API, que sirva assets y que rechace rutas inexistentes. GitHub Actions compila Next.js, ejecuta las pruebas PostgreSQL y construye la imagen Docker de Render.
 
-La API crea las tablas al arrancar. Esto sirve para la estructura actual; futuros cambios de esquema requieren migraciones y respaldo de la base de datos antes de aplicarse.
+La demo mantiene las limitaciones del proyecto: no hay autenticación ni autorización API, el selector de roles solo controla la interfaz y no existen migraciones de esquema. Usa datos de demostración. Para datos privados hace falta resolver esos puntos. Las predicciones y el motor de carbono son estimaciones, no mediciones certificadas.
 
-## IA opcional
+Antes de vencer PostgreSQL, exporta los datos mediante las herramientas de respaldo apropiadas. La continuidad de los datos después de 30 días requiere una estrategia distinta; no hay persistencia gratuita indefinida garantizada por esta configuración.
 
-Añade `GEMINI_API_KEY` solo al entorno de `carbon-twin-api` para habilitar LangChain. `GEMINI_MODEL` permite seleccionar un modelo disponible en tu cuenta. Sin credenciales se utiliza el asesor local. No se ha invocado Gemini ni consumido cuota durante las pruebas.
-
-Langflow requiere un servicio adicional accesible desde FastAPI y `LANGFLOW_URL`, `LANGFLOW_FLOW_ID`, `LANGFLOW_API_KEY`. Consulta `langflow/README.md`. Si Langflow falla, la API intenta LangChain y finalmente el asesor local. No publiques claves en GitHub, Jira ni variables `NEXT_PUBLIC_*`.
-
-## Machine Learning y laboratorio
-
-La configuración de Render conserva reportes y predicción con el modelo incluido. El entrenamiento queda deshabilitado mediante `ML_TRAINING_ENABLED=false` para evitar cargar TensorFlow y búsquedas de hiperparámetros en una instancia pequeña. La interfaz refleja esa disponibilidad.
-
-El laboratorio Streamlit es opcional y no se crea en el Blueprint. Puedes ejecutarlo localmente con `pip install -r backend/requirements.txt` y `npm run ml:lab`. Para mostrar un laboratorio remoto, configura `NEXT_PUBLIC_ML_LAB_URL` en el frontend y vuelve a compilar. Sin esa variable no aparece un enlace a localhost en producción.
-
-Si habilitas entrenamiento en la API, instala `backend/requirements.txt`, aumenta recursos tras medir el pipeline y activa `ML_TRAINING_ENABLED=true`. Mantén un solo worker: el estado del pipeline está en memoria. El disco conserva los artefactos entre despliegues; realiza un respaldo propio de modelos y reportes. Dos servicios separados no comparten este disco: un laboratorio remoto necesita una estrategia explícita de publicación de modelos.
-
-## Alcance de seguridad
-
-Este despliegue mantiene el funcionamiento actual de **demo compartida**. El selector de roles del frontend no autentica solicitudes: los endpoints CRUD y bootstrap carecen de autorización. Antes de almacenar datos privados o permitir uso público de producción, implementa autenticación y autorización en la API. CORS y la conexión privada a PostgreSQL no reemplazan esa protección.
-
-La interfaz muestra algunos ejemplos de arquitectura; la referencia contractual real de FastAPI es `/docs` en el dominio de la API y `/openapi.json`. El proxy del frontend reenvía únicamente `/api/*`.
-
-## Verificación y mantenimiento
-
-```powershell
-npm run lint
-npm run build
-python -m pip install -r backend/requirements-runtime.txt pytest pyyaml jsonschema
-python -m pytest backend/tests -q
-python scripts/validate_render.py
-```
-
-La prueba de integración con PostgreSQL usa `TEST_DATABASE_URL` y crea y elimina exclusivamente un esquema temporal. En GitHub Actions se usa una base efímera PostgreSQL 16. El esquema oficial valida la estructura YAML; no verifica permisos de Render, disponibilidad de nombres ni el despliegue real.
-
-Para revertir código, usa un despliegue anterior desde Render. Restaurar una base de datos o modelos es una operación separada: conserva respaldos antes de cambios incompatibles.
-
-Referencias: [Blueprints](https://render.com/docs/blueprint-spec), [red privada](https://render.com/docs/private-network), [discos persistentes](https://render.com/docs/disks), [checks de salud](https://render.com/docs/health-checks).
+Referencias: [plan gratuito](https://render.com/docs/free), [Docker](https://render.com/docs/docker), [Blueprints](https://render.com/docs/blueprint-spec).

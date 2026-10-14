@@ -1,55 +1,25 @@
 # yaml-language-server: $schema=https://render.com/schema/render.yaml.json
-# Demo persistente. Los planes y el disco generan cargos al crear los recursos.
+# Demo Free: PostgreSQL vence a los 30 días; sin discos ni planes de pago.
 services:
   - type: web
-    name: carbon-twin-web
-    runtime: node
+    name: carbon-twin-ap9
+    runtime: docker
     region: oregon
-    plan: starter
-    buildCommand: npm ci --include=dev && npm run build
-    startCommand: npm start -- --hostname 0.0.0.0 --port $PORT
-    healthCheckPath: /
-    envVars:
-      - key: NODE_VERSION
-        value: "22"
-      - key: NODE_ENV
-        value: production
-      - key: NEXT_TELEMETRY_DISABLED
-        value: "1"
-      - key: API_HOSTPORT
-        fromService:
-          name: carbon-twin-api
-          type: web
-          property: hostport
-  - type: web
-    name: carbon-twin-api
-    runtime: python
-    region: oregon
-    plan: starter
-    buildCommand: pip install -r backend/requirements-runtime.txt
-    startCommand: python -m uvicorn backend.app.main:app --host 0.0.0.0 --port $PORT --workers 1
+    plan: free
+    dockerfilePath: ./Dockerfile.render
+    dockerContext: .
     healthCheckPath: /api/ready
-    disk:
-      name: carbon-twin-models
-      mountPath: /var/data
-      sizeGB: 1
     envVars:
-      - key: PYTHON_VERSION
-        value: "3.11.11"
-      - key: PYTHONUNBUFFERED
-        value: "1"
       - key: DATABASE_URL
         fromDatabase:
           name: carbon-twin-db
           property: connectionString
-      - key: ML_ARTIFACTS_DIR
-        value: /var/data/ml_artifacts
       - key: ML_TRAINING_ENABLED
         value: "false"
 databases:
   - name: carbon-twin-db
     region: oregon
-    plan: basic-256mb
+    plan: free
     databaseName: carbon_twins
     user: carbon_user
     postgresMajorVersion: "16"

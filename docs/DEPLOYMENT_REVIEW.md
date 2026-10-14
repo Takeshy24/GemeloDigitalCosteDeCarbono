@@ -2,6 +2,10 @@
 
 Fecha: 14 de octubre de 2026.
 
+## Perfil actual solicitado: gratuito
+
+El usuario solicitó desplegar exclusivamente gratis. La configuración actual de `render.yaml` utiliza un servicio Docker Free que publica la exportación estática de Next.js desde FastAPI, más PostgreSQL Free. Se eliminó la necesidad de dos servicios y del disco de pago. La base Free vence a los 30 días; los modelos archivados se incluyen en la imagen y el entrenamiento permanece deshabilitado. Véase `RENDER_DEPLOYMENT.md`. Los apartados siguientes conservan la revisión inicial del perfil persistente de pago, reemplazado por esta configuración.
+
 ## Arquitectura verificada
 
 La aplicación activa utiliza React 19 y Next.js 15; `package.json` compila y arranca Next.js. Vite y Express permanecen como código anterior y no son los procesos de despliegue. FastAPI persiste recursos JSONB en PostgreSQL. El motor de ACV corre en el frontend; la API proporciona CRUD, bootstrap, asesor IA, reportes y predicción ML. Streamlit es un laboratorio opcional separado.
