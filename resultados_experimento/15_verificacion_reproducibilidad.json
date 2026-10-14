@@ -13,6 +13,6 @@
     547.41
   ],
   "lca_identical": true,
-  "ml_metrics_identical": true,
+  "ml_metrics_identical": false,
   "note": "La segunda ejecución del ML reproduce exactamente métricas y mejor modelo; solo el tiempo de reloj difiere."
 }

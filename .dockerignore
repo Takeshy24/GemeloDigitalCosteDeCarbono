@@ -1,0 +1,56 @@
+# =============================================================================
+# .dockerignore
+# =============================================================================
+# Excluye archivos innecesarios para reducir el tamaño de la imagen.
+# =============================================================================
+
+# Git
+.git
+.gitignore
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
+build/
+dist/
+*.egg-info/
+
+# Node
+node_modules/
+.next/
+npm-debug.log*
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Datos temporales
+tmp/
+*.log
+
+# Documentación
+docs/
+documentacion/
+
+# Frontend (no necesario para el pipeline de ML)
+app/
+src/
+public/
+
+# Streamlit
+.streamlit/
+
+# Archivos grandes
+resultados_experimento.zip

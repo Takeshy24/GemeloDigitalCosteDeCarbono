@@ -1,10 +1,10 @@
 {
-  "executed_at_utc": "2026-09-15T06:20:13.852898+00:00",
+  "executed_at_utc": "2026-09-30T06:56:26.348183+00:00",
   "seed": 42,
-  "os": "Windows-10-10.0.26200-SP0",
-  "python": "3.11.0 (main, Oct 24 2022, 18:26:48) [MSC v.1933 64 bit (AMD64)]",
+  "os": "Linux-6.8.0-1064-azure-x86_64-with-glibc2.39",
+  "python": "3.14.2 (main, Sep 10 2026, 12:33:04) [GCC 13.3.0]",
   "node": "v20.19.4",
-  "git_commit": "cefeef88af6115fffc624a09eb375595d6a5b208",
+  "git_commit": "d5bdd1567df1ed1d8dffc436cebdb3bedd1a9f71",
   "commands": [
     "npx tsx scripts/run-experiment-lca.ts resultados_experimento",
     "py -3.11 scripts/run_experiment_ml.py",
