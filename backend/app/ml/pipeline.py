@@ -43,7 +43,7 @@ PIPELINE_STATUS: dict = {
     "report": None,
 }
 
-ARTIFACTS_DIR = Path("backend/ml_artifacts")
+from ..artifacts import ARTIFACTS_DIR
 REAL_DATASET_PATH = ARTIFACTS_DIR / "real_dataset.csv"
 REAL_DATASET_METADATA_PATH = ARTIFACTS_DIR / "real_dataset_metadata.json"
 

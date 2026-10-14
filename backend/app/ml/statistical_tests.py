@@ -44,7 +44,7 @@ from statsmodels.tools import add_constant
 
 warnings.filterwarnings("ignore")
 
-ARTIFACTS_DIR = Path("backend/ml_artifacts")
+from ..artifacts import ARTIFACTS_DIR
 PLOTS_DIR = ARTIFACTS_DIR / "plots"
 ALPHA = 0.05
 N_BOOTSTRAP = 2_000

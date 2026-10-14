@@ -55,7 +55,7 @@ from .models import (
 
 warnings.filterwarnings("ignore")
 
-ARTIFACTS_DIR = Path("backend/ml_artifacts")
+from ..artifacts import ARTIFACTS_DIR
 TARGET = "total_co2e_kg"
 RANDOM_SEED = 42
 CV_FOLDS = 5

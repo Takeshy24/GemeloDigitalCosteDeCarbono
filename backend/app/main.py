@@ -6,11 +6,12 @@ import logging
 from fastapi import BackgroundTasks, Depends, FastAPI, HTTPException, Response, status
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
-from sqlalchemy import select
+from sqlalchemy import select, text
 from sqlalchemy.orm import Session
 from .config import get_settings
 from .database import Base, engine, get_db
 from .models import Resource
+from .artifacts import ARTIFACTS_DIR, initialize_artifacts
 
 RESOURCE_KINDS = {"projects", "sensors", "edge", "cloud", "twins", "emission-factors", "scenarios", "users", "audit-logs"}
 logger = logging.getLogger(__name__)
@@ -19,6 +20,7 @@ logger = logging.getLogger(__name__)
 @asynccontextmanager
 async def lifespan(_: FastAPI):
     Base.metadata.create_all(bind=engine)
+    initialize_artifacts()
     yield
 
 
@@ -90,6 +92,17 @@ def health():
             },
         },
     }
+
+
+@app.get("/api/ready")
+def ready():
+    try:
+        with engine.connect() as connection:
+            connection.execute(text("SELECT 1"))
+    except Exception:
+        logger.exception("PostgreSQL no está disponible")
+        raise HTTPException(status_code=503, detail="Base de datos no disponible")
+    return {"status": "ok", "database": "ok"}
 
 
 @app.get("/api/resources/{kind}")
@@ -212,6 +225,8 @@ async def ml_train(request: MLTrainRequest, background_tasks: BackgroundTasks):
     Devuelve 202 Accepted inmediatamente.
     Consulta el estado con GET /api/ml/status.
     """
+    if not get_settings().ml_training_enabled:
+        raise HTTPException(status_code=403, detail="El entrenamiento está deshabilitado en este servicio. Usa el laboratorio ML.")
     from .ml.pipeline import PIPELINE_STATUS
     if PIPELINE_STATUS.get("status") == "running":
         raise HTTPException(status_code=409, detail="El pipeline ya está en ejecución.")
@@ -229,6 +244,7 @@ def ml_status():
     from .ml.pipeline import PIPELINE_STATUS
     # Devuelve una copia sin el reporte completo (puede ser grande)
     safe = {k: v for k, v in PIPELINE_STATUS.items() if k != "report"}
+    safe["training_enabled"] = get_settings().ml_training_enabled
     return safe
 
 
@@ -237,7 +253,7 @@ def ml_report():
     """Devuelve el reporte JSON completo del último entrenamiento."""
     import json
     from pathlib import Path
-    report_path = Path("backend/ml_artifacts/ml_report.json")
+    report_path = ARTIFACTS_DIR / "ml_report.json"
     if not report_path.exists():
         raise HTTPException(status_code=404, detail="No hay reporte disponible. Ejecuta primero /api/ml/train.")
     with open(report_path, encoding="utf-8") as f:
@@ -255,8 +271,8 @@ def ml_predict(request: PredictRequest):
     import joblib
     from pathlib import Path
 
-    preprocessor_path = Path("backend/ml_artifacts/preprocessor.pkl")
-    model_path = Path("backend/ml_artifacts/best_model_sklearn.pkl")
+    preprocessor_path = ARTIFACTS_DIR / "preprocessor.pkl"
+    model_path = ARTIFACTS_DIR / "best_model_sklearn.pkl"
 
     if not preprocessor_path.exists() or not model_path.exists():
         raise HTTPException(

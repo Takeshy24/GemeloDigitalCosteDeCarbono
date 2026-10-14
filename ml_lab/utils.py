@@ -19,7 +19,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-ARTIFACTS_DIR = PROJECT_ROOT / "backend" / "ml_artifacts"
+from backend.app.artifacts import ARTIFACTS_DIR
 REPORT_PATH = ARTIFACTS_DIR / "ml_report.json"
 PREPROCESSOR_PATH = ARTIFACTS_DIR / "preprocessor.pkl"
 SKLEARN_MODEL_PATH = ARTIFACTS_DIR / "best_model_sklearn.pkl"

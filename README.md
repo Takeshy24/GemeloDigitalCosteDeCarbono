@@ -49,6 +49,13 @@ El repositorio incluye un `Dockerfile` que permite la containerización del pipe
 ```bash
 docker build -t carbontwin:1.0.0 .
 docker run --rm carbontwin:1.0.0
+```
+
+El Dockerfile raíz ejecuta experimentos; Render utiliza los runtimes nativos definidos en `render.yaml`.
+
+## Render
+
+Consulta [la guía de despliegue](docs/RENDER_DEPLOYMENT.md) y el [análisis técnico](docs/DEPLOYMENT_REVIEW.md).
 
 ## Seguridad
 

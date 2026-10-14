@@ -15,6 +15,7 @@ class Settings(BaseSettings):
     langflow_flow_id: str | None = None
     langflow_api_key: str | None = None
     langflow_timeout_seconds: float = 60.0
+    ml_training_enabled: bool = True
 
     @property
     def allowed_origins(self) -> list[str]:

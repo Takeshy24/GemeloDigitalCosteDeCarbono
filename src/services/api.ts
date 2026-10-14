@@ -1,4 +1,7 @@
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+export const API_BASE_URL = (process.env.NEXT_PUBLIC_API_URL ||
+  (process.env.NODE_ENV === 'production' ? '' : 'http://localhost:8000')).replace(/\/$/, '');
+export const ML_LAB_URL = process.env.NEXT_PUBLIC_ML_LAB_URL ||
+  (process.env.NODE_ENV === 'production' ? null : 'http://localhost:8501');
 
 export type ResourceKind = 'projects' | 'sensors' | 'edge' | 'cloud' | 'twins' | 'emission-factors' | 'scenarios' | 'users' | 'audit-logs';
 export type AIChatMessage = { role: 'user' | 'assistant'; text: string };

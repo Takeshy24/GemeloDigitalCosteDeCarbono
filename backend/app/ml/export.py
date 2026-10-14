@@ -32,7 +32,7 @@ import numpy as np
 import tensorflow as tf
 from tensorflow import keras
 
-ARTIFACTS_DIR = Path("backend/ml_artifacts")
+from ..artifacts import ARTIFACTS_DIR
 RANDOM_SEED = 42
 tf.random.set_seed(RANDOM_SEED)
 
