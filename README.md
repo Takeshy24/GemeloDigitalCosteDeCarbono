@@ -59,7 +59,7 @@ Consulta [la guía de despliegue](docs/RENDER_DEPLOYMENT.md) y el [análisis té
 
 ## Railway
 
-Consulta [la guía de Railway](docs/RAILWAY_DEPLOYMENT.md) para reutilizar la imagen Docker en un único servicio con SQLite temporal. El acceso a la cuenta y la verificación pública del despliegue siguen pendientes.
+La [demo pública de Carbon Twin](https://carbon-twin-web-production.up.railway.app/) se verificó el 14/10/2026. Consulta [la guía de Railway](docs/RAILWAY_DEPLOYMENT.md) para reutilizar la imagen Docker en un único servicio con SQLite temporal y conocer los límites de créditos y persistencia.
 
 ## Documentación en Jira
 

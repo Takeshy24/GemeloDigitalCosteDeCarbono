@@ -1,6 +1,6 @@
 # Despliegue de la demo en Railway
 
-Estado: configuración preparada; todavía falta crear el servicio y verificar su URL pública. Esta guía no confirma un despliegue activo.
+Primer despliegue verificado el 14/10/2026 a las 21:04 UTC (16:04, Lima): [abrir Carbon Twin](https://carbon-twin-web-production.up.railway.app/). Railway marcó como `SUCCESS` el despliegue `50961956-9de5-4602-a23b-a179ab6f113c`, del commit `9110d249cd9f2e24cebeba1dceab8b4f25b132aa`. Esta es evidencia del estado observado en esa fecha, no una garantía de disponibilidad permanente.
 
 ## Servicio único desde GitHub
 
@@ -24,6 +24,7 @@ En los ajustes del servicio:
 - Mantener una réplica y política de reinicio `On Failure`, hasta tres reintentos.
 - Generar el dominio público con puerto de destino `10000` cuando el despliegue esté saludable.
 - No crear PostgreSQL, Redis, volúmenes ni otros servicios para esta demo.
+- Para evitar reconstrucciones por cambios de documentación, los watch paths del servicio son `**`, `!/docs/**` y `!/README.md` (una regla por línea).
 
 ## Créditos y datos
 
@@ -31,9 +32,11 @@ La prueba de Railway ofrece US$5 de crédito que vencen a los 30 días. Puede ag
 
 SQLite se guarda en almacenamiento temporal: los cambios pueden perderse al reemplazar el contenedor o volver a desplegar. Es una demo, sin persistencia garantizada. La predicción utiliza los modelos incluidos; el entrenamiento permanece deshabilitado. Gemini y Langflow son opcionales y, sin sus credenciales, se utiliza el asesor local.
 
-## Verificación pública pendiente
+## Verificación pública
 
-Confirmar que el despliegue llegó a estado saludable y comprobar:
+La verificación inicial confirmó la interfaz y sus recursos estáticos, HTTP 200 en `/api/health`, `/api/ready` y `/docs`, y tres proyectos de demostración consultables en la API después de abrir la interfaz. `/api/ml/predict` respondió HTTP 200 con `total_co2e_kg=270.6074` para 10 sensores, 2 nodos Edge, intensidad 0.3, 5 GB/día, frecuencia 0.1 Hz, resolución 0.5, cultivo wheat, 180 días y sin energía solar. Se utilizó el modelo archivado, sin entrenamiento. El resultado se registró en [Jira KAN-4](https://takeshydiaz05.atlassian.net/browse/KAN-4).
+
+En futuros despliegues, confirmar que el servicio llegó a estado saludable y comprobar:
 
 1. `/` carga la interfaz y sus recursos estáticos.
 2. `/api/health` responde sin revelar claves y `/api/ready` devuelve HTTP 200.
