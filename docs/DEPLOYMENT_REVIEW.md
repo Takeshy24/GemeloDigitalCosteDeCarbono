@@ -41,4 +41,6 @@ Los endpoints de recursos no tienen autenticación ni autorización; los roles s
 
 ## Documentación en Jira
 
-La verificación requiere el sitio/proyecto de Jira y una conexión Atlassian autenticada. Mientras eso no esté confirmado, este informe y la guía están preparados en GitHub como respaldo y **no acreditan que la documentación ya exista en Jira**. Los documentos funcionales y del laboratorio existentes son `docs/DOCUMENTO_1_SISTEMA_Y_MODULOS_EXPOSICION.md` y `docs/DOCUMENTO_2_MACHINE_LEARNING_ESTADISTICA_LABORATORIO.md`. Al obtener acceso se debe verificar su correspondencia con los tickets y añadir el enlace del PR y la guía de despliegue al registro correcto.
+El usuario confirmó que no había utilizado Jira, que acaba de crear una cuenta y que todavía no existe documentación del proyecto allí. Por tanto, queda pendiente **crear y publicar la documentación en Jira**, usando el sitio/proyecto correspondiente y una conexión Atlassian autenticada.
+
+La documentación disponible está en GitHub: este informe, `docs/RENDER_DEPLOYMENT.md`, `docs/DOCUMENTO_1_SISTEMA_Y_MODULOS_EXPOSICION.md` y `docs/DOCUMENTO_2_MACHINE_LEARNING_ESTADISTICA_LABORATORIO.md`. Al publicar en Jira, se deben enlazar esos documentos y el PR de preparación para Render. Esta actualización registra la aclaración del usuario; no se han creado registros ni documentos en Jira.
