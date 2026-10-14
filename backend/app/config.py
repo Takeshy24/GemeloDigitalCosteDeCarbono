@@ -11,10 +11,19 @@ class Settings(BaseSettings):
     gemini_api_key: str | None = None
     # Modelo Flash-Lite estable: prioriza bajo costo y baja latencia para el chat.
     gemini_model: str = "gemini-3.5-flash-lite"
+    langflow_url: str | None = None
+    langflow_flow_id: str | None = None
+    langflow_api_key: str | None = None
+    langflow_timeout_seconds: float = 60.0
+    ml_training_enabled: bool = True
 
     @property
     def allowed_origins(self) -> list[str]:
         return [origin.strip() for origin in self.cors_origins.split(",") if origin.strip()]
+
+    @property
+    def langflow_configured(self) -> bool:
+        return bool(self.langflow_url and self.langflow_flow_id and self.langflow_api_key)
 
 
 @lru_cache

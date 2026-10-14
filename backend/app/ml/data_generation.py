@@ -22,6 +22,7 @@ Target:
 import numpy as np
 import pandas as pd
 from pathlib import Path
+from ..artifacts import ARTIFACTS_DIR
 
 RANDOM_SEED = 42
 N_SAMPLES = 2_500
@@ -98,15 +99,20 @@ def load_or_generate(
 ) -> pd.DataFrame:
     """
     Si se proporciona `csv_path` y el archivo existe, lo carga.
-    Si no se proporciona pero existe backend/ml_artifacts/dataset.csv, lo carga por defecto.
-    En caso contrario, genera el dataset sintético con los parámetros indicados.
+    Por defecto se utiliza el dataset real preparado en
+    ``backend/ml_artifacts/real_dataset.csv``. El dataset sintético queda
+    disponible únicamente como respaldo reproducible para pruebas.
     """
     if csv_path is not None:
         p = Path(csv_path)
         if p.exists():
             return pd.read_csv(p)
 
-    default_path = Path("backend/ml_artifacts/dataset.csv")
+    real_path = (ARTIFACTS_DIR / "real_dataset.csv")
+    if real_path.exists():
+        return pd.read_csv(real_path)
+
+    default_path = (ARTIFACTS_DIR / "dataset.csv")
     if default_path.exists():
         return pd.read_csv(default_path)
 
@@ -115,7 +121,7 @@ def load_or_generate(
 
 if __name__ == "__main__":
     df = generate_dataset()
-    out = Path("backend/ml_artifacts/dataset.csv")
+    out = (ARTIFACTS_DIR / "dataset.csv")
     out.parent.mkdir(parents=True, exist_ok=True)
     df.to_csv(out, index=False)
     print(f"Dataset generado: {len(df)} registros → {out}")

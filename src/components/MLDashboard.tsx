@@ -20,7 +20,7 @@ import {
   ExternalLink,
 } from 'lucide-react';
 
-const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+import { API_BASE_URL as API, ML_LAB_URL } from '../services/api';
 
 // ─────────────────────────────────────────────────────────
 // Types
@@ -75,6 +75,7 @@ interface PipelineReport {
 }
 
 interface PipelineStatus {
+  training_enabled?: boolean;
   status: 'idle' | 'running' | 'done' | 'error';
   step: string;
   progress: number;
@@ -148,7 +149,7 @@ const MODEL_COLORS: Record<string, { bar: string; ring: string }> = {
 // ─────────────────────────────────────────────────────────
 export const MLDashboard: React.FC = () => {
   const [status, setStatus] = useState<PipelineStatus>({
-    status: 'idle', step: '', progress: 0, started_at: null, finished_at: null, error: null,
+    training_enabled: false, status: 'idle', step: '', progress: 0, started_at: null, finished_at: null, error: null,
   });
   const [report, setReport] = useState<PipelineReport | null>(null);
   const [loading, setLoading] = useState(false);
@@ -238,26 +239,27 @@ export const MLDashboard: React.FC = () => {
               <RefreshCw className="w-4 h-4" /> Actualizar
             </button>
           )}
-          <a
+          {ML_LAB_URL && <a
             id="ml-streamlit-lab-btn"
-            href="http://localhost:8501"
+            href={ML_LAB_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-indigo-500/40 bg-indigo-950/40 text-indigo-300 hover:bg-indigo-900/50 hover:text-white font-semibold text-sm transition-all shadow-md shadow-indigo-950/50"
           >
             <FlaskConical className="w-4 h-4 text-indigo-400" />
-            <span>Laboratorio Streamlit (8501)</span>
+            <span>Laboratorio Streamlit</span>
             <ExternalLink className="w-3.5 h-3.5 opacity-70" />
-          </a>
+          </a>}
           <button
             id="ml-train-btn"
             onClick={startTraining}
-            disabled={loading || status.status === 'running'}
+            disabled={loading || status.status === 'running' || status.training_enabled === false}
+            title={status.training_enabled === false ? 'Entrenamiento no disponible en este servicio' : undefined}
             className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-violet-600 hover:bg-violet-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold text-sm transition-all shadow-lg shadow-violet-900/40"
           >
             {status.status === 'running'
               ? <><RefreshCw className="w-4 h-4 animate-spin" /> Entrenando…</>
-              : <><Play className="w-4 h-4" /> Entrenar modelos</>}
+              : <><Play className="w-4 h-4" /> {status.training_enabled === false ? 'Entrenamiento no disponible' : 'Entrenar modelos'}</>}
           </button>
         </div>
       </div>

@@ -4,19 +4,19 @@
   "task": "regression",
   "target": "total_co2e_kg",
   "framework": "TensorFlow/Keras (distilled from sklearn)",
-  "exported_at": "2026-09-28T12:23:32.767755+00:00",
+  "exported_at": "2026-09-29T13:17:21.521314+00:00",
   "files": {
     "h5_model": "backend\\ml_artifacts\\best_model.h5",
     "sklearn_backup": "backend\\ml_artifacts\\best_model_sklearn.pkl",
     "preprocessor": "backend\\ml_artifacts\\preprocessor.pkl"
   },
   "performance": {
-    "RMSE": 25.7942,
-    "MAE": 14.3474,
-    "R2": 0.987383,
-    "MAPE": 8.6414,
-    "cv_rmse_mean": 25.4655,
-    "cv_rmse_std": 3.9084
+    "RMSE": 25.7887,
+    "MAE": 14.3434,
+    "R2": 0.987388,
+    "MAPE": 8.6252,
+    "cv_rmse_mean": 27.7427,
+    "cv_rmse_std": 2.6027
   },
   "distillation": {
     "keras_sklearn_correlation": 0.0,
@@ -25,7 +25,7 @@
   "best_hyperparams": {
     "kernel": "rbf",
     "gamma": "auto",
-    "epsilon": 0.01,
+    "epsilon": 0.1,
     "C": 500
   },
   "architecture": {

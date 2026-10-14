@@ -18,6 +18,9 @@ from utils import (
     H5_MODEL_PATH,
     MODEL_CARD_PATH,
     PLOTS_DIR,
+    REAL_DATASET_METADATA_PATH,
+    REAL_DATASET_PATH,
+    SYNTHETIC_DATASET_PATH,
     PREPROCESSOR_PATH,
     SKLEARN_MODEL_PATH,
     STAT_REPORT_PATH,
@@ -333,8 +336,27 @@ report = load_existing_report()
 with st.sidebar:
     st.subheader("⚙️ Configuración de Experimentos")
 
+    dataset_source = st.radio(
+        "Fuente de datos",
+        options=["Dataset real seleccionado", "Dataset sintético reproducible"],
+        index=0,
+        help="El dataset real es el conjunto preparado a partir de fuentes de electricidad y telemetría agrícola documentadas.",
+    )
+    use_real_dataset = dataset_source == "Dataset real seleccionado"
+    selected_csv_path = str(REAL_DATASET_PATH if use_real_dataset else SYNTHETIC_DATASET_PATH)
+
+    if use_real_dataset:
+        st.success("✓ Dataset real activo")
+        if REAL_DATASET_METADATA_PATH.exists():
+            with open(REAL_DATASET_METADATA_PATH, "r", encoding="utf-8") as f:
+                real_meta = json.load(f)
+            st.caption(
+                f"{real_meta.get('n_samples', 0):,} registros · "
+                f"objetivo: {real_meta.get('target', 'total_co2e_kg')}"
+            )
+
     n_samples = st.slider(
-        "Muestras del dataset sintético",
+        "Muestras si se usa el dataset sintético",
         min_value=1000,
         max_value=10000,
         value=2500,
@@ -401,6 +423,7 @@ if start_training:
                 n_iter_search=int(n_iter_search),
                 cv_folds=int(cv_folds),
                 final_cv_folds=10,
+                csv_path=selected_csv_path,
                 progress_callback=update_progress,
             )
             report = new_report
@@ -431,7 +454,7 @@ with col1:
     <div class="metric-card">
         <div class="metric-title">Tamaño Dataset</div>
         <div class="metric-value">{dataset_samples:,}</div>
-        <div class="metric-sub">9 variables agronómicas</div>
+    <div class="metric-sub">Dataset real seleccionado</div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -467,12 +490,14 @@ st.markdown("<br>", unsafe_allow_html=True)
 # -----------------------------------------------------------------------------
 # PESTAÑAS PRINCIPALES DEL LABORATORIO
 # -----------------------------------------------------------------------------
-tab_eda, tab_train, tab_stats, tab_export, tab_sim = st.tabs([
+tab_eda, tab_train, tab_best, tab_cv, tab_stats, tab_export, tab_sim = st.tabs([
     "📊 1. Exploración y EDA",
-    "🚀 2. Entrenamiento y Comparativa",
-    "📐 3. Rigor Estadístico",
-    "💾 4. Destilación y Descarga .h5",
-    "🔮 5. Simulador en Vivo",
+    "🚀 2. Entrenamientos",
+    "🏆 3. Mejor modelo",
+    "🔁 4. Validación cruzada",
+    "📐 5. Pruebas estadísticas",
+    "📄 6. Reportes y artefactos",
+    "🔮 Simulador en vivo",
 ])
 
 # =============================================================================
@@ -482,7 +507,11 @@ with tab_eda:
     st.subheader("📊 Análisis Exploratorio de Datos (EDA)")
     st.markdown("Explora las correlaciones físicas, distribución de huella de carbono y dispersión por variables clave.")
 
-    df_eda = load_dataset_for_eda(n_samples=n_samples, seed=seed)
+    df_eda = load_dataset_for_eda(
+        n_samples=n_samples,
+        seed=seed,
+        dataset_source="real" if use_real_dataset else "synthetic",
+    )
 
     col_view1, col_view2 = st.columns([2, 1])
     with col_view1:
@@ -585,7 +614,67 @@ with tab_train:
                 st.json(m_data.get("best_params", {}))
 
 # =============================================================================
-# TAB 3: RIGOR ESTADÍSTICO
+# TAB 3: SELECCIÓN Y EXPLICABILIDAD DEL MEJOR MODELO
+# =============================================================================
+with tab_best:
+    st.subheader("🏆 3. Selección y explicabilidad del mejor modelo")
+    if not report:
+        st.info("Ejecuta el pipeline para obtener el modelo ganador y su explicación.")
+    else:
+        winner = report.get("best_model", {})
+        st.success(
+            f"Modelo seleccionado: **{winner.get('name', 'N/D')}**. "
+            "Criterio: menor RMSE medio en validación cruzada."
+        )
+        m = winner.get("metrics", {})
+        k1, k2, k3, k4 = st.columns(4)
+        k1.metric("RMSE test", f"{m.get('RMSE', 0):,.2f} kg CO₂e")
+        k2.metric("MAE test", f"{m.get('MAE', 0):,.2f} kg CO₂e")
+        k3.metric("R² test", f"{m.get('R2', 0):.4f}")
+        k4.metric("MAPE", f"{m.get('MAPE', 0):.2f}%")
+        st.markdown(
+            "**Lectura de la explicación:** la importancia por permutación mide cuánto empeora "
+            "el RMSE cuando una variable se mezcla aleatoriamente. Valores mayores implican mayor "
+            "contribución predictiva global; no representan causalidad."
+        )
+        explainability = winner.get("explainability", [])
+        if explainability:
+            st.dataframe(pd.DataFrame(explainability), use_container_width=True, hide_index=True)
+        explain_img = PLOTS_DIR / "winner_permutation_importance.png"
+        if explain_img.exists():
+            st.image(str(explain_img), caption="Importancia global por permutación (conjunto de prueba)", use_container_width=True)
+
+# =============================================================================
+# TAB 4: VALIDACIÓN CRUZADA
+# =============================================================================
+with tab_cv:
+    st.subheader("🔁 4. Validación cruzada y estabilidad del rendimiento")
+    if not report:
+        st.info("Ejecuta el pipeline para visualizar los folds.")
+    else:
+        cv_rows = []
+        for model_name, model_data in report.get("models", {}).items():
+            scores = model_data.get("cv_rmse_scores", [])
+            for fold, score in enumerate(scores, 1):
+                cv_rows.append({"Modelo": model_name, "Fold": fold, "RMSE": score})
+        if cv_rows:
+            cv_df = pd.DataFrame(cv_rows)
+            st.dataframe(cv_df.pivot(index="Fold", columns="Modelo", values="RMSE").round(3), use_container_width=True)
+            st.caption("Cada fold conserva el mismo criterio RMSE; menor media y menor dispersión indican mayor estabilidad.")
+        st.markdown("##### Resumen de estabilidad")
+        stability = pd.DataFrame([
+            {
+                "Modelo": name,
+                "CV-RMSE media": data.get("cv_rmse_mean", 0),
+                "Desviación estándar": data.get("cv_rmse_std", 0),
+                "N.º folds": len(data.get("cv_rmse_scores", [])),
+            }
+            for name, data in report.get("models", {}).items()
+        ]).sort_values("CV-RMSE media")
+        st.dataframe(stability.round(4), use_container_width=True, hide_index=True)
+
+# =============================================================================
+# TAB 5: RIGOR ESTADÍSTICO
 # =============================================================================
 with tab_stats:
     st.subheader("📐 Pruebas Estadísticas de Hipótesis y Significancia")
@@ -892,10 +981,10 @@ with tab_stats:
 # TAB 4: EXPORTACIÓN Y DESCARGA .H5
 # =============================================================================
 with tab_export:
-    st.subheader("💾 Red Neuronal Destilada y Artefactos de Exportación")
+    st.subheader("📄 6. Reportes, interpretabilidad y artefactos")
     st.markdown(
-        "El modelo ganador fue destilado mediante regresión de conocimiento hacia una **red neuronal profunda Keras Feedforward**, "
-        "optimizada para inferencia de baja latencia y exportada en formato nativo **`.h5`**."
+        "Esta sección concentra el reporte CRISP-DM, los resultados estadísticos, la explicación del modelo y los artefactos reproducibles. "
+        "El modelo ganador también está disponible en formato nativo **`.h5`**."
     )
 
     col_card, col_downloads = st.columns([3, 2])
@@ -911,6 +1000,17 @@ with tab_export:
 
     with col_downloads:
         st.markdown("##### Descargas Directas")
+
+        crisp_report_path = ARTIFACTS_DIR / "crisp_dm_report.md"
+        crisp_bytes = read_artifact_bytes(crisp_report_path)
+        if crisp_bytes:
+            st.download_button(
+                label="📥 Descargar reporte CRISP-DM",
+                data=crisp_bytes,
+                file_name="crisp_dm_report.md",
+                mime="text/markdown",
+                use_container_width=True,
+            )
         
         # Botón Descargar best_model.h5
         h5_bytes = read_artifact_bytes(H5_MODEL_PATH)
@@ -954,6 +1054,11 @@ with tab_export:
                 mime="application/json",
                 use_container_width=True,
             )
+
+    crisp_report_path = ARTIFACTS_DIR / "crisp_dm_report.md"
+    if crisp_report_path.exists():
+        st.markdown("##### Vista previa del reporte consolidado")
+        st.markdown(crisp_report_path.read_text(encoding="utf-8"), unsafe_allow_html=False)
 
 # =============================================================================
 # TAB 5: SIMULADOR DE INFERENCIA EN TIEMPO REAL

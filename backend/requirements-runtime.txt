@@ -1,0 +1,17 @@
+# API y predicción; el entrenamiento completo se instala con requirements.txt.
+fastapi==0.115.12
+uvicorn[standard]==0.34.2
+sqlalchemy==2.0.40
+psycopg[binary]==3.2.6
+pydantic-settings==2.8.1
+httpx==0.28.1
+langchain==1.4.3
+langchain-google-genai==4.4.0
+grpcio==1.84.0
+# Coinciden con las versiones que cargan los artefactos sklearn del proyecto.
+scikit-learn==1.8.0
+pandas==2.3.3
+numpy==2.4.1
+joblib==1.5.3
+xgboost-cpu==3.2.0; platform_system == "Linux"
+xgboost==3.2.0; platform_system != "Linux"

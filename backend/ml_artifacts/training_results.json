@@ -1,115 +1,154 @@
 {
   "RandomForest": {
     "best_params": {
-      "n_estimators": 200,
-      "min_samples_split": 2,
-      "min_samples_leaf": 1,
+      "n_estimators": 100,
+      "min_samples_split": 4,
+      "min_samples_leaf": 4,
       "max_features": "log2",
-      "max_depth": 30
+      "max_depth": 10
     },
     "cv_rmse_scores": [
-      59.976,
-      63.841,
-      64.881,
-      58.7265,
-      58.5813,
-      57.0807,
-      65.4142,
-      60.9025,
-      78.1748,
-      75.2135
+      77.9084,
+      75.3682,
+      89.1651
     ],
-    "cv_rmse_mean": 64.2792,
-    "cv_rmse_std": 6.7788,
+    "cv_rmse_mean": 80.8139,
+    "cv_rmse_std": 5.9956,
     "test_metrics": {
-      "RMSE": 73.3859,
-      "MAE": 42.4271,
-      "R2": 0.897873,
-      "MAPE": 38.3875
+      "RMSE": 86.2662,
+      "MAE": 50.742,
+      "R2": 0.858877,
+      "MAPE": 48.2365
     }
   },
   "XGBoost": {
     "best_params": {
-      "subsample": 0.8,
-      "reg_lambda": 2.0,
+      "subsample": 0.9,
+      "reg_lambda": 1.0,
       "reg_alpha": 0.5,
-      "n_estimators": 500,
-      "max_depth": 4,
-      "learning_rate": 0.1,
+      "n_estimators": 300,
+      "max_depth": 6,
+      "learning_rate": 0.01,
       "colsample_bytree": 0.8
     },
     "cv_rmse_scores": [
-      31.0156,
-      30.0465,
-      29.2785,
-      28.1934,
-      23.7562,
-      25.7228,
-      31.73,
-      27.0321,
-      37.0941,
-      31.1233
+      54.4588,
+      53.0569,
+      63.5141
     ],
-    "cv_rmse_mean": 29.4993,
-    "cv_rmse_std": 3.5068,
+    "cv_rmse_mean": 57.01,
+    "cv_rmse_std": 4.6346,
     "test_metrics": {
-      "RMSE": 29.9698,
-      "MAE": 18.6687,
-      "R2": 0.982967,
-      "MAPE": 11.7142
+      "RMSE": 64.6393,
+      "MAE": 35.3725,
+      "R2": 0.920766,
+      "MAPE": 26.2187
     }
   },
   "SVR": {
     "best_params": {
       "kernel": "rbf",
       "gamma": "auto",
-      "epsilon": 0.01,
+      "epsilon": 0.1,
       "C": 500
     },
     "cv_rmse_scores": [
-      24.6281,
-      24.0732,
-      26.5471,
-      20.125,
-      21.7544,
-      23.2755,
-      25.2396,
-      24.1573,
-      33.6839,
-      31.171
+      26.2802,
+      25.5488,
+      31.3991
     ],
-    "cv_rmse_mean": 25.4655,
-    "cv_rmse_std": 3.9084,
+    "cv_rmse_mean": 27.7427,
+    "cv_rmse_std": 2.6027,
     "test_metrics": {
-      "RMSE": 25.7942,
-      "MAE": 14.3474,
-      "R2": 0.987383,
-      "MAPE": 8.6414
-    }
+      "RMSE": 25.7887,
+      "MAE": 14.3434,
+      "R2": 0.987388,
+      "MAPE": 8.6252
+    },
+    "permutation_importance": [
+      {
+        "feature": "cloud_region_intensity",
+        "importance_mean": 218.701824,
+        "importance_std": 9.234311
+      },
+      {
+        "feature": "model_resolution",
+        "importance_mean": 140.841942,
+        "importance_std": 5.622628
+      },
+      {
+        "feature": "solar_powered",
+        "importance_mean": 72.718084,
+        "importance_std": 2.968499
+      },
+      {
+        "feature": "operation_days",
+        "importance_mean": 62.75004,
+        "importance_std": 4.401746
+      },
+      {
+        "feature": "crop_type_soy",
+        "importance_mean": 19.874381,
+        "importance_std": 2.550444
+      },
+      {
+        "feature": "sensor_count",
+        "importance_mean": 14.240239,
+        "importance_std": 4.616477
+      },
+      {
+        "feature": "crop_type_rice",
+        "importance_mean": 12.401923,
+        "importance_std": 1.502022
+      },
+      {
+        "feature": "edge_count",
+        "importance_mean": 11.107325,
+        "importance_std": 3.437428
+      },
+      {
+        "feature": "crop_type_wheat",
+        "importance_mean": 5.461617,
+        "importance_std": 1.459019
+      },
+      {
+        "feature": "data_volume_gb_day",
+        "importance_mean": 4.253682,
+        "importance_std": 1.608436
+      },
+      {
+        "feature": "crop_type_tomato",
+        "importance_mean": 2.616511,
+        "importance_std": 0.402725
+      },
+      {
+        "feature": "transmission_freq_hz",
+        "importance_mean": 2.472986,
+        "importance_std": 1.035068
+      },
+      {
+        "feature": "crop_type_corn",
+        "importance_mean": 0.443093,
+        "importance_std": 0.183987
+      }
+    ]
   },
   "Stacking": {
     "best_params": {
-      "final_estimator__alpha": 100.0
+      "final_estimator__alpha": 0.1
     },
     "cv_rmse_scores": [
-      26.135,
-      30.512,
-      29.8402,
-      26.8431,
-      24.9284,
-      24.9056,
-      31.537,
-      28.0199,
-      41.5135,
-      33.2394
+      29.935,
+      32.7707,
+      38.0001
     ],
-    "cv_rmse_mean": 29.7474,
-    "cv_rmse_std": 4.7494,
+    "cv_rmse_mean": 33.5686,
+    "cv_rmse_std": 3.3405,
     "test_metrics": {
-      "RMSE": 32.5168,
+      "RMSE": 32.5166,
       "MAE": 17.9727,
       "R2": 0.979949,
-      "MAPE": 12.8371
+      "MAPE": 12.837
     }
   },
   "Blending": {
@@ -121,24 +160,17 @@
       ]
     },
     "cv_rmse_scores": [
-      33.3316,
-      38.3724,
-      43.6275,
-      30.2576,
-      31.5633,
-      32.2704,
-      39.4401,
-      37.2423,
-      53.9177,
-      48.6405
+      41.9681,
+      38.2102,
+      50.1013
     ],
-    "cv_rmse_mean": 38.8664,
-    "cv_rmse_std": 7.4131,
+    "cv_rmse_mean": 43.4265,
+    "cv_rmse_std": 4.9628,
     "test_metrics": {
-      "RMSE": 32.2673,
-      "MAE": 17.1081,
-      "R2": 0.980256,
-      "MAPE": 11.2929
+      "RMSE": 41.7663,
+      "MAE": 22.0202,
+      "R2": 0.96692,
+      "MAPE": 17.2549
     }
   }
 }

@@ -1,6 +1,10 @@
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+export const API_BASE_URL = (process.env.NEXT_PUBLIC_API_URL ||
+  (process.env.NODE_ENV === 'production' ? '' : 'http://localhost:8000')).replace(/\/$/, '');
+export const ML_LAB_URL = process.env.NEXT_PUBLIC_ML_LAB_URL ||
+  (process.env.NODE_ENV === 'production' ? null : 'http://localhost:8501');
 
 export type ResourceKind = 'projects' | 'sensors' | 'edge' | 'cloud' | 'twins' | 'emission-factors' | 'scenarios' | 'users' | 'audit-logs';
+export type AIChatMessage = { role: 'user' | 'assistant'; text: string };
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const response = await fetch(`${API_BASE_URL}${path}`, { ...init, headers: { 'Content-Type': 'application/json', ...init?.headers } });
@@ -13,8 +17,8 @@ export const carbonApi = {
   save: <T extends { id: string; projectId?: string }>(kind: ResourceKind, data: T) => request<T>(`/api/resources/${kind}/${encodeURIComponent(data.id)}`, { method: 'PUT', body: JSON.stringify({ id: data.id, projectId: data.projectId, data }) }),
   remove: (kind: ResourceKind, id: string) => request<void>(`/api/resources/${kind}/${encodeURIComponent(id)}`, { method: 'DELETE' }),
   bootstrap: (resources: Partial<Record<ResourceKind, unknown[]>>) => request<{ created: number }>('/api/bootstrap', { method: 'POST', body: JSON.stringify({ resources }) }),
-  analyze: (project: unknown, assessment: unknown, userPrompt: string) => request<{ analysis: string; source: string }>('/api/ai/analyze', {
+  analyze: (project: unknown, assessment: unknown, userPrompt: string, history: AIChatMessage[] = []) => request<{ analysis: string; source: string }>('/api/ai/analyze', {
     method: 'POST',
-    body: JSON.stringify({ project, assessment, userPrompt }),
+    body: JSON.stringify({ project, assessment, userPrompt, history: history.slice(-12) }),
   }),
 };

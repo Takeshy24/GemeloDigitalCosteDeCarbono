@@ -27,7 +27,9 @@ from scipy import stats
 
 warnings.filterwarnings("ignore")
 
-EDA_DIR = Path("backend/ml_artifacts/eda")
+from ..artifacts import ARTIFACTS_DIR
+
+EDA_DIR = ARTIFACTS_DIR / "eda"
 TARGET = "total_co2e_kg"
 PALETTE = "viridis"
 

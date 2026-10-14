@@ -1,23 +1,10 @@
-fastapi==0.115.12
-uvicorn[standard]==0.34.2
-sqlalchemy==2.0.40
-psycopg[binary]==3.2.6
-pydantic-settings==2.8.1
-httpx==0.28.1
+# API y predicción (mismas versiones de los artefactos del repositorio)
+-r requirements-runtime.txt
 
-# Asistente del gemelo digital: orquestación LLM en FastAPI
-langchain>=0.3.25,<0.4.0
-langchain-google-genai>=2.1.0,<3.0.0
-
-# ML / Data Science
-scikit-learn>=1.4.0
-xgboost>=2.0.0
-tensorflow>=2.15.0
-scipy>=1.12.0
-statsmodels>=0.14.0
-pandas>=2.2.0
-numpy>=1.26.0
-matplotlib>=3.8.0
-seaborn>=0.13.0
-joblib>=1.3.0
-streamlit>=1.30.0
+# Perfil completo para entrenamiento, exportación Keras y laboratorio local.
+tensorflow==2.20.0
+scipy==1.17.0
+statsmodels==0.15.0
+matplotlib==3.10.8
+seaborn==0.13.2
+streamlit==1.52.2

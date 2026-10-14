@@ -1,3 +1,4 @@
+import { ML_LAB_URL } from '../services/api';
 import React, { useEffect } from 'react';
 import {
   LayoutDashboard,
@@ -233,9 +234,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
           </div>
 
           {/* Enlace al Laboratorio Streamlit */}
-          <a
+          {ML_LAB_URL && <a
             id="sidebar-streamlit-lab"
-            href="http://localhost:8501"
+            href={ML_LAB_URL}
             target="_blank"
             rel="noopener noreferrer"
             onClick={onClose}
@@ -246,7 +247,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               <span>Laboratorio Streamlit</span>
             </div>
             <ExternalLink className="w-3.5 h-3.5 opacity-70" />
-          </a>
+          </a>}
 
           {/* Docs */}
           <button
